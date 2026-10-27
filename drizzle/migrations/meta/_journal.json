@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1793117111402,
+      "tag": "0000_invoice_saas_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793117132106,
+      "tag": "0001_logo_bucket_policies",
+      "breakpoints": true
+    }
+  ]
+}

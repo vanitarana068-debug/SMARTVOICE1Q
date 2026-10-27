@@ -1,0 +1,317 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system — "Ledger" premium SaaS look.
+ * "Sky Serenity": cloud canvas, white surfaces, ice-blue tints, sky accents, deep-blue text.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-paper: var(--paper);
+  --color-paper-foreground: var(--paper-foreground);
+  --color-paper-muted: var(--paper-muted);
+  --color-paper-line: var(--paper-line);
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-label: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-card: 0 1px 2px rgb(35 71 106 / 0.06), 0 6px 20px -10px rgb(35 71 106 / 0.18);
+  --shadow-lifted: 0 2px 6px rgb(35 71 106 / 0.06), 0 22px 48px -20px rgb(35 71 106 / 0.28);
+}
+
+:root {
+  --radius: 0.625rem;
+  color-scheme: light;
+  /* Sky Serenity: cloud canvas, white surfaces, ice-blue tints, sky accents, deep-blue text. */
+  --background: #f7fbff;
+  --foreground: #23476a;
+  --card: #ffffff;
+  --card-foreground: #23476a;
+  --popover: #ffffff;
+  --popover-foreground: #23476a;
+  --primary: #23476a;
+  --primary-foreground: #f7fbff;
+  /* Mid blue for accent text: sky itself is too pale to read on cloud. */
+  --primary-text: #2a68a8;
+  --secondary: #ddeeff;
+  --secondary-foreground: #23476a;
+  --muted: #eaf3fd;
+  --muted-foreground: #587390;
+  --accent: #ddeeff;
+  --accent-foreground: #23476a;
+  --destructive: #cf3f3f;
+  --destructive-foreground: #ffffff;
+  --success: #1e8457;
+  --success-foreground: #ffffff;
+  --warning: #b86e0e;
+  --warning-foreground: #ffffff;
+  --border: #d5e5f5;
+  --input: #c6daee;
+  --ring: #77b9f2;
+  --chart-1: #23476a;
+  --chart-2: #77b9f2;
+  --chart-3: #1e8457;
+  --chart-4: #b86e0e;
+  --chart-5: #cf3f3f;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #23476a;
+  --sidebar-primary: #23476a;
+  --sidebar-primary-foreground: #f7fbff;
+  --sidebar-accent: #ddeeff;
+  --sidebar-accent-foreground: #23476a;
+  --sidebar-border: #d5e5f5;
+  --sidebar-ring: #77b9f2;
+  /* Soft sky light washing across every page. */
+  --glow-1: rgb(119 185 242 / 0.38);
+  --glow-2: rgb(221 238 255 / 0.95);
+  --glow-3: rgb(119 185 242 / 0.18);
+  --sparkle: rgb(119 185 242 / 0.55);
+  --sparkle-tint: rgb(35 71 106 / 0.25);
+  /* White "paper" surface used for invoice and email previews. */
+  --paper: #ffffff;
+  --paper-foreground: #23476a;
+  --paper-muted: #587390;
+  --paper-line: #dde9f5;
+}
+
+.dark {
+  --background: oklch(0.165 0.025 277);
+  --foreground: oklch(0.95 0.008 277);
+  --card: oklch(0.21 0.032 277);
+  --card-foreground: oklch(0.95 0.008 277);
+  --popover: oklch(0.21 0.032 277);
+  --popover-foreground: oklch(0.95 0.008 277);
+  --primary: oklch(0.7 0.16 277);
+  --primary-foreground: oklch(0.16 0.04 277);
+  --secondary: oklch(0.27 0.045 277);
+  --secondary-foreground: oklch(0.95 0.008 277);
+  --muted: oklch(0.27 0.035 277);
+  --muted-foreground: oklch(0.7 0.025 277);
+  --accent: oklch(0.3 0.05 195);
+  --accent-foreground: oklch(0.92 0.04 190);
+  --destructive: oklch(0.66 0.19 25);
+  --destructive-foreground: oklch(0.165 0.025 277);
+  --success: oklch(0.7 0.13 162);
+  --success-foreground: oklch(0.165 0.025 277);
+  --warning: oklch(0.8 0.14 75);
+  --warning-foreground: oklch(0.22 0.05 60);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.6 0.15 277);
+  --chart-1: oklch(0.7 0.16 277);
+  --chart-2: oklch(0.72 0.12 190);
+  --chart-3: oklch(0.7 0.13 162);
+  --chart-4: oklch(0.8 0.14 75);
+  --chart-5: oklch(0.7 0.18 15);
+  --sidebar: oklch(0.18 0.035 277);
+  --sidebar-foreground: oklch(0.93 0.015 277);
+  --sidebar-primary: oklch(0.72 0.14 280);
+  --sidebar-primary-foreground: oklch(0.16 0.04 277);
+  --sidebar-accent: oklch(0.26 0.05 277);
+  --sidebar-accent-foreground: oklch(0.97 0.008 277);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.72 0.14 280);
+  --glow-1: oklch(0.4 0.15 277 / 0.45);
+  --glow-2: oklch(0.4 0.08 195 / 0.4);
+  --glow-3: oklch(0.38 0.12 320 / 0.35);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 0.005em;
+    line-height: 1.6;
+  }
+
+  /* Full-page wrappers: navy night sky with soft glows and twinkling sparkles. */
+  .min-h-screen.bg-background {
+    position: relative;
+    isolation: isolate;
+    background-image:
+      radial-gradient(60rem 40rem at 0% 0%, var(--glow-1), transparent 60%),
+      radial-gradient(50rem 36rem at 100% 10%, var(--glow-2), transparent 60%),
+      radial-gradient(56rem 40rem at 50% 100%, var(--glow-3), transparent 65%);
+    background-attachment: fixed;
+  }
+
+  .min-h-screen.bg-background::before,
+  .min-h-screen.bg-background::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .min-h-screen.bg-background::before {
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, var(--sparkle), transparent),
+      radial-gradient(1.5px 1.5px at 90px 140px, var(--sparkle), transparent),
+      radial-gradient(2px 2px at 160px 60px, var(--sparkle-tint), transparent),
+      radial-gradient(1.5px 1.5px at 230px 190px, var(--sparkle), transparent),
+      radial-gradient(1.5px 1.5px at 50px 220px, var(--sparkle-tint), transparent),
+      radial-gradient(2px 2px at 270px 100px, var(--sparkle), transparent);
+    background-size: 300px 260px;
+    opacity: 0.7;
+    animation: sparkle-twinkle 5s ease-in-out infinite;
+  }
+
+  .min-h-screen.bg-background::after {
+    background-image:
+      radial-gradient(3px 3px at 60px 80px, var(--sparkle), transparent),
+      radial-gradient(2px 2px at 330px 40px, var(--sparkle-tint), transparent),
+      radial-gradient(3px 3px at 210px 300px, var(--sparkle), transparent),
+      radial-gradient(2px 2px at 400px 220px, var(--sparkle), transparent),
+      radial-gradient(3.5px 3.5px at 120px 380px, var(--sparkle-tint), transparent);
+    background-size: 460px 420px;
+    opacity: 0.4;
+    animation: sparkle-twinkle 7s ease-in-out 2.5s infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .min-h-screen.bg-background::before,
+    .min-h-screen.bg-background::after {
+      animation: none;
+    }
+  }
+
+  /* Display serif: Fraunces with its softened, optically sized cut. */
+  .font-display {
+    font-weight: 380;
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 100, "WONK" 0;
+    letter-spacing: -0.02em;
+  }
+
+  /* Small all-caps labels (eyebrows, field captions) get their own monospace voice. */
+  .uppercase {
+    font-family: var(--font-label);
+    font-weight: 500;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-primary) 18%, transparent);
+  }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes stamp-in {
+  0% { opacity: 0; transform: rotate(-14deg) scale(1.8); }
+  60% { opacity: 1; transform: rotate(-14deg) scale(0.94); }
+  100% { opacity: 1; transform: rotate(-14deg) scale(1); }
+}
+
+@keyframes sparkle-twinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.9; }
+}
+
+@utility animate-rise {
+  animation: rise-in 0.9s var(--ease-out-expo) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+@utility animate-stamp {
+  animation: stamp-in 0.45s var(--ease-out-expo) both;
+}
+
+@utility shadow-paper {
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.8) inset, 0 30px 60px -24px rgb(35 71 106 / 0.35), 0 10px 24px -14px rgb(35 71 106 / 0.2);
+}
+
+/* Scroll reveal: elements start slightly lowered and fade in once visible (see components/site/reveal.tsx). */
+@layer components {
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+    transition-delay: var(--delay, 0ms);
+  }
+  .reveal[data-inview="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-rise,
+  .animate-stamp {
+    animation: none;
+  }
+}
+
+@utility shadow-card {
+  box-shadow: var(--shadow-card);
+}
+
+@utility shadow-lifted {
+  box-shadow: var(--shadow-lifted);
+}
+
+/* Accent used as text/outline needs the lighter rose to stay readable on black cherry. */
+.text-primary {
+  color: var(--primary-text);
+}
