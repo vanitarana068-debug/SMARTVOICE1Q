@@ -1,0 +1,374 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #fff;
+    }
+    #c-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(820px 620px at 72% 30%, rgba(35, 70, 232, 0.6), transparent 70%),
+        linear-gradient(160deg, #0a1a6b 0%, #061048 45%, #040b33 100%);
+    }
+    #c-orb {
+      position: absolute;
+      left: 930px;
+      top: 640px;
+      width: 560px;
+      height: 560px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 60% 40%, #8b5cf6 0%, #5b21b6 45%, rgba(76, 29, 149, 0) 72%);
+      opacity: 0.85;
+    }
+    #c-stage {
+      position: absolute;
+      inset: 0;
+    }
+    .tile {
+      position: absolute;
+      left: 110px;
+      top: 104px;
+      width: 140px;
+      height: 140px;
+      border-radius: 38px;
+      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+      box-shadow: 0 22px 46px -16px rgba(59, 130, 246, 0.9), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tile svg {
+      width: 78px;
+      height: 78px;
+    }
+    .title {
+      position: absolute;
+      left: 286px;
+      top: 92px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      font-size: 90px;
+      line-height: 1.03;
+      letter-spacing: -0.02em;
+    }
+    .w {
+      display: inline-block;
+    }
+    .accent {
+      background: linear-gradient(90deg, #60a5fa, #818cf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .sub {
+      position: absolute;
+      left: 110px;
+      top: 330px;
+      width: 860px;
+      font-size: 44px;
+      line-height: 1.3;
+      color: rgba(226, 234, 255, 0.92);
+    }
+    .list {
+      position: absolute;
+      left: 110px;
+      top: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 38px;
+      font-weight: 500;
+    }
+    .tick {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+    }
+    .tick svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    /* The invoice on paper */
+    #c-card {
+      position: absolute;
+      left: 1100px;
+      top: 370px;
+      width: 690px;
+      height: 500px;
+      background: #ffffff;
+      border-radius: 20px;
+      color: #0f172a;
+      padding: 36px 40px;
+      box-shadow: 0 50px 90px -24px rgba(0, 0, 0, 0.75);
+    }
+    .inv-top {
+      display: flex;
+      justify-content: space-between;
+    }
+    .inv-from b {
+      display: block;
+      font-size: 26px;
+    }
+    .inv-from span {
+      font-size: 18px;
+      color: #475569;
+    }
+    .inv-meta {
+      text-align: right;
+      font-size: 18px;
+      color: #3b4657;
+      line-height: 1.4;
+    }
+    .inv-meta b {
+      display: block;
+      font-family: "Poppins", sans-serif;
+      font-size: 46px;
+      color: #1e293b;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .inv-head,
+    .inv-row {
+      display: grid;
+      grid-template-columns: 1fr 70px 130px 140px;
+      text-align: right;
+    }
+    .inv-head span:first-child,
+    .inv-row span:first-child {
+      text-align: left;
+    }
+    .inv-head {
+      margin-top: 26px;
+      padding: 10px 14px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      font-size: 19px;
+      font-weight: 700;
+      color: #475569;
+    }
+    .inv-row {
+      padding: 12px 14px;
+      font-size: 26px;
+      border-bottom: 1px solid #eef2f7;
+    }
+    .inv-total {
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+      gap: 28px;
+      margin-top: 18px;
+      padding-right: 14px;
+      font-size: 26px;
+      font-weight: 600;
+    }
+    #c-total {
+      font-size: 42px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    #c-stamp {
+      position: absolute;
+      left: 40px;
+      bottom: 34px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 18px;
+      border: 4px solid #22c55e;
+      border-radius: 14px;
+      color: #16a34a;
+      background: rgba(34, 197, 94, 0.08);
+      font-family: "Poppins", sans-serif;
+      font-size: 44px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+    #c-stamp svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    #c-trail {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+    }
+    #c-plane {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 160px;
+      height: 160px;
+    }
+    #c-flash {
+      position: absolute;
+      inset: 0;
+      background: #2346e8;
+    }
+  </style>
+
+  <div data-hf-id="hf-oxlj" id="root" data-composition-id="create" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-0oss" id="c-bg"></div>
+    <div data-hf-id="hf-kvgb" id="c-orb" data-layout-ignore></div>
+
+    <div data-hf-id="hf-exbx" id="c-stage">
+      <div data-hf-id="hf-6iyu" id="c-tile" class="tile">
+        <svg data-hf-id="hf-mih4" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path data-hf-id="hf-18du" d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4" />
+          <path data-hf-id="hf-uhau" d="M14 3l5 5v3" />
+          <path data-hf-id="hf-ajck" d="M8.5 9h4M8.5 13h6M8.5 17h2.5" />
+          <path data-hf-id="hf-nox4" d="M19.2 13.3a1.8 1.8 0 0 1 2.5 2.5L16.4 21l-3.2.8.8-3.2z" />
+        </svg>
+      </div>
+      <h2 data-hf-id="hf-nj4p" id="c-title" class="title">
+        <span data-hf-id="hf-55a4" class="w">Create</span> <span data-hf-id="hf-duco" class="w">Invoices</span><br data-hf-id="hf-x5px" />
+        <span data-hf-id="hf-tqc5" class="w accent">in</span> <span data-hf-id="hf-blcv" class="w accent">Seconds</span>
+      </h2>
+      <p data-hf-id="hf-ap6a" id="c-sub" class="sub">Professional invoices, ready<br data-hf-id="hf-rsrt" />whenever you need them.</p>
+
+      <div data-hf-id="hf-33o8" class="list">
+        <div data-hf-id="hf-moeh" class="item c-item">
+          <span data-hf-id="hf-coyi" class="tick"><svg data-hf-id="hf-dy64" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-5ycy" class="c-check" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1" /></svg></span>
+          Customizable templates
+        </div>
+        <div data-hf-id="hf-d96t" class="item c-item">
+          <span data-hf-id="hf-ptha" class="tick"><svg data-hf-id="hf-rv78" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-fcvq" class="c-check" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1" /></svg></span>
+          Add customer details
+        </div>
+        <div data-hf-id="hf-pq2x" class="item c-item">
+          <span data-hf-id="hf-q7sb" class="tick"><svg data-hf-id="hf-qoa5" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-fr6r" class="c-check" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1" /></svg></span>
+          Set due dates
+        </div>
+        <div data-hf-id="hf-sva2" class="item c-item">
+          <span data-hf-id="hf-qm3c" class="tick"><svg data-hf-id="hf-r2l6" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-g5hs" class="c-check" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1" /></svg></span>
+          Send instantly
+        </div>
+      </div>
+
+      <div data-hf-id="hf-nd87" id="c-card">
+        <div data-hf-id="hf-5z2v" class="inv-top">
+          <div data-hf-id="hf-acka" class="inv-from"><b data-hf-id="hf-8rk2">ABC Traders</b><span data-hf-id="hf-ew6z">B-12, Business Park, Delhi</span></div>
+          <div data-hf-id="hf-af7s" class="inv-meta">
+            <b data-hf-id="hf-tle8">INVOICE</b>
+            Invoice No: INV-001<br data-hf-id="hf-szow" />
+            Date: 10 Aug 2026<br data-hf-id="hf-sldv" />
+            Due Date: 30 Aug 2026
+          </div>
+        </div>
+        <div data-hf-id="hf-qhc4" class="inv-head"><span data-hf-id="hf-3f1h">Description</span><span data-hf-id="hf-co5r">Qty</span><span data-hf-id="hf-rvbn">Rate</span><span data-hf-id="hf-5mr1">Amount</span></div>
+        <div data-hf-id="hf-59ru" class="inv-row c-row"><span data-hf-id="hf-rgjx">Web Design</span><span data-hf-id="hf-ikog">1</span><span data-hf-id="hf-h2xp">₹10,000</span><span data-hf-id="hf-w181">₹10,000</span></div>
+        <div data-hf-id="hf-hnq6" class="inv-row c-row"><span data-hf-id="hf-w8kd">Hosting</span><span data-hf-id="hf-cy6g">1</span><span data-hf-id="hf-33pt">₹2,500</span><span data-hf-id="hf-8ikl">₹2,500</span></div>
+        <div data-hf-id="hf-kj10" class="inv-total c-row"><span data-hf-id="hf-7qep">Total</span><span data-hf-id="hf-1ryt" id="c-total">₹0</span></div>
+        <div data-hf-id="hf-gglg" id="c-stamp">
+          SENT
+          <svg data-hf-id="hf-fz4r" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path data-hf-id="hf-89u2" d="M22 2 11 13M22 2l-7 20-4-9-9-4z" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Paper plane and its flight trail -->
+      <svg data-hf-id="hf-qt3o" id="c-trail" viewBox="0 0 1920 1080">
+        <defs data-hf-id="hf-mh0t">
+          <linearGradient data-hf-id="hf-8osj" id="c-trail-g" x1="0" y1="1" x2="1" y2="0">
+            <stop data-hf-id="hf-4w64" offset="0" stop-color="#60a5fa" stop-opacity="0" />
+            <stop data-hf-id="hf-5b7w" offset="1" stop-color="#38bdf8" stop-opacity="0.9" />
+          </linearGradient>
+        </defs>
+        <path data-hf-id="hf-xqtj"
+          id="c-trail-path"
+          d="M1210 640 C 1330 520, 1420 330, 1560 250"
+          fill="none"
+          stroke="url(#c-trail-g)"
+          stroke-width="6"
+          stroke-linecap="round"
+          pathLength="1"
+          stroke-dasharray="1"
+        />
+      </svg>
+      <svg data-hf-id="hf-wqb2" id="c-plane" viewBox="0 0 64 64" data-layout-ignore>
+        <defs data-hf-id="hf-vl9d">
+          <linearGradient data-hf-id="hf-ml2b" id="c-plane-g" x1="0" y1="0" x2="1" y2="1">
+            <stop data-hf-id="hf-w8jp" offset="0" stop-color="#67e8f9" />
+            <stop data-hf-id="hf-9o3w" offset="1" stop-color="#2563eb" />
+          </linearGradient>
+        </defs>
+        <path data-hf-id="hf-1tj2" d="M60 4 4 28l20 8z" fill="url(#c-plane-g)" />
+        <path data-hf-id="hf-fq6b" d="M60 4 24 36l6 22z" fill="#1d4ed8" />
+        <path data-hf-id="hf-ug7b" d="M60 4 30 58l8-14z" fill="#38bdf8" />
+      </svg>
+    </div>
+
+    <div data-hf-id="hf-ck5t" id="c-flash"></div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // The hero's button colour clears to reveal this world.
+    tl.fromTo("#c-flash", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.out" }, 0);
+
+    tl.fromTo("#c-tile", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.6)" }, 0.15);
+    tl.fromTo(
+      "#c-title .w",
+      { opacity: 0, filter: "blur(6px)" },
+      { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067, ease: "power2.out" },
+      0.3,
+    );
+    tl.fromTo("#c-sub", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 0.72);
+
+    // Checklist: each row arrives, then its tick draws.
+    tl.fromTo(".c-item", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, stagger: 0.12, ease: "power2.out" }, 1.0);
+    tl.fromTo(".c-check", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.25, stagger: 0.12, ease: "power2.out" }, 1.12);
+
+    // Invoice swings in and settles at its tilt; lines populate; total counts.
+    tl.fromTo(
+      "#c-card",
+      { opacity: 0, x: 260, rotation: 6, filter: "blur(10px)" },
+      { opacity: 1, x: 0, rotation: -6, filter: "blur(0px)", duration: 0.85, ease: "expo.out" },
+      0.6,
+    );
+    tl.fromTo(".c-row", { opacity: 0 }, { opacity: 1, duration: 0.25, stagger: 0.12, ease: "power2.out" }, 1.25);
+    const total = document.querySelector("#c-total");
+    const t = { v: 0 };
+    tl.fromTo(t, { v: 0 }, { v: 12500, duration: 0.8, ease: "power2.out", onUpdate: () => (total.textContent = "₹" + Math.round(t.v).toLocaleString("en-IN")) }, 1.6);
+
+    // SENT stamp slams; the card takes the hit.
+    tl.fromTo("#c-stamp", { opacity: 0, scale: 1.9, rotation: -16 }, { opacity: 1, scale: 1, rotation: -8, duration: 0.35, ease: "back.out(2.2)" }, 2.5);
+    tl.fromTo("#c-card", { y: 0 }, { y: 8, duration: 0.06, ease: "power2.out" }, 2.72);
+    tl.to("#c-card", { y: 0, duration: 0.22, ease: "back.out(3)" }, 2.78);
+
+    // Paper plane takes off along its trail, then leaves frame.
+    tl.fromTo("#c-trail-path", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.85, ease: "power2.out" }, 2.75);
+    tl.fromTo(
+      "#c-plane",
+      { x: 1150, y: 560, scale: 0.4, rotation: 10, opacity: 0 },
+      { x: 1540, y: 150, scale: 1, rotation: -6, opacity: 1, duration: 0.85, ease: "power2.out" },
+      2.75,
+    );
+    tl.to("#c-plane", { x: 2120, y: -260, rotation: -16, duration: 0.5, ease: "power3.in" }, 3.8);
+
+    // Whip left into the next panel.
+    tl.to("#c-stage", { x: -560, filter: "blur(16px)", opacity: 0, duration: 0.28, ease: "power3.in" }, 4.32);
+    tl.to("#c-orb", { x: -560, opacity: 0, duration: 0.28, ease: "power3.in" }, 4.32);
+
+    window.__timelines["create"] = tl;
+  </script>
+</template>

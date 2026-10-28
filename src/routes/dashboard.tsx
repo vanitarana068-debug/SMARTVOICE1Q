@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import type { User } from "@supabase/supabase-js";
-import { AlertTriangle, BellRing, Building2, Check, CircleDollarSign, FilePlus2, LogOut, Send, UserPlus } from "lucide-react";
+import { AlertTriangle, BellRing, Building2, Check, CircleDollarSign, FileDown, FilePlus2, LogOut, Send, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -12,6 +12,7 @@ import { CustomerDialog } from "@/components/dashboard/customer-dialog";
 import { InvoiceDialog } from "@/components/dashboard/invoice-dialog";
 import { PaymentDialog, type PaymentTarget } from "@/components/dashboard/payment-dialog";
 import {
+  fetchInvoiceDoc,
   useCustomers,
   useInvoices,
   useMarkSent,
@@ -24,6 +25,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { daysBetween, effectiveStatus, formatDate, formatMoney, formatMoneyCompact, num, reminderStageLabels, statusMeta } from "@/lib/format";
 import { receivablesSummary } from "@/lib/invoice-math";
+import { downloadInvoicePdf } from "@/lib/invoice-pdf";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/dashboard")({
@@ -74,6 +76,21 @@ function Dashboard({ user }: { user: User }) {
   // Set when "New invoice" had to ask for a client first, so we continue to the invoice afterwards.
   const [continueToInvoice, setContinueToInvoice] = useState(false);
   const [paymentTarget, setPaymentTarget] = useState<PaymentTarget | null>(null);
+  const [pdfLoading, setPdfLoading] = useState<string | null>(null);
+
+  const downloadPdf = async (invoiceId: string) => {
+    if (!profile.data) return;
+    setPdfLoading(invoiceId);
+    try {
+      const doc = await fetchInvoiceDoc(invoiceId, profile.data);
+      downloadInvoicePdf(doc);
+      toast.success(`${doc.invoiceNumber}.pdf downloaded`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Couldn't create the PDF");
+    } finally {
+      setPdfLoading(null);
+    }
+  };
 
   const paid = payments.data ?? new Map<string, number>();
   const rows = useMemo(
@@ -247,6 +264,8 @@ function Dashboard({ user }: { user: User }) {
                     })
                   }
                   onRecordPayment={() => setPaymentTarget({ id: inv.id, number: inv.invoice_number, balance })}
+                  pdfLoading={pdfLoading === inv.id}
+                  onPdf={() => void downloadPdf(inv.id)}
                 />
               ))}
             </ul>
@@ -389,6 +408,8 @@ function InvoiceListItem({
   sending,
   onMarkSent,
   onRecordPayment,
+  pdfLoading,
+  onPdf,
 }: {
   inv: InvoiceRow;
   total: number;
@@ -397,6 +418,8 @@ function InvoiceListItem({
   sending: boolean;
   onMarkSent: () => void;
   onRecordPayment: () => void;
+  pdfLoading: boolean;
+  onPdf: () => void;
 }) {
   const meta = statusMeta[status] ?? { label: status, className: "bg-muted text-muted-foreground" };
   return (
@@ -418,7 +441,10 @@ function InvoiceListItem({
           {balance > 0 && balance < total && status !== "draft" ? ` · ${formatMoney(balance)} left` : ""}
         </p>
       </div>
-      <div className="flex gap-2 sm:justify-end">
+      <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+        <Button size="sm" variant="ghost" onClick={onPdf} disabled={pdfLoading} aria-label={`Download ${inv.invoice_number} as PDF`}>
+          <FileDown /> {pdfLoading ? "Preparing…" : "PDF"}
+        </Button>
         {status === "draft" ? (
           <Button size="sm" variant="secondary" onClick={onMarkSent} disabled={sending}>
             <Send /> {sending ? "Updating…" : "Mark as sent"}

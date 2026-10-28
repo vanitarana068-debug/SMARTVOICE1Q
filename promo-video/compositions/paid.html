@@ -1,0 +1,260 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #fff;
+    }
+    #p-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(860px 700px at 78% 50%, rgba(16, 185, 129, 0.42), transparent 70%),
+        linear-gradient(160deg, #064e43 0%, #053b36 35%, #021a18 100%);
+    }
+    .tile {
+      position: absolute;
+      left: 110px;
+      top: 104px;
+      width: 140px;
+      height: 140px;
+      border-radius: 38px;
+      background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+      box-shadow: 0 22px 46px -16px rgba(16, 185, 129, 0.9), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tile svg {
+      width: 76px;
+      height: 76px;
+    }
+    .title {
+      position: absolute;
+      left: 286px;
+      top: 92px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      font-size: 90px;
+      line-height: 1.03;
+      letter-spacing: -0.02em;
+    }
+    .w {
+      display: inline-block;
+    }
+    .accent {
+      background: linear-gradient(90deg, #34d399, #5eead4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .sub {
+      position: absolute;
+      left: 110px;
+      top: 330px;
+      font-size: 42px;
+      color: rgba(225, 250, 240, 0.92);
+    }
+    .list {
+      position: absolute;
+      left: 110px;
+      top: 462px;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 37px;
+      font-weight: 500;
+    }
+    .tick {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #10b981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+    }
+    .tick svg {
+      width: 30px;
+      height: 30px;
+    }
+    #p-pill {
+      position: absolute;
+      left: 110px;
+      top: 846px;
+      height: 92px;
+      padding: 0 40px 0 28px;
+      border-radius: 46px;
+      background: rgba(16, 185, 129, 0.16);
+      border: 2px solid rgba(52, 211, 153, 0.45);
+      display: flex;
+      align-items: center;
+      font-size: 34px;
+      font-weight: 600;
+    }
+    #p-pill-text {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Rising bars, arrow and rupee coin */
+    .bar {
+      position: absolute;
+      bottom: 180px;
+      width: 98px;
+      border-radius: 16px 16px 4px 4px;
+      background: linear-gradient(180deg, #34d399 0%, rgba(16, 185, 129, 0.55) 55%, rgba(16, 185, 129, 0.08) 100%);
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35);
+      transform-origin: 50% 100%;
+    }
+    #p-arrow {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+    }
+    #p-coin {
+      position: absolute;
+      left: 1600px;
+      top: 630px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #5eead4 0%, #14b8a6 45%, #047857 100%);
+      border: 6px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 0 26px 60px -18px rgba(16, 185, 129, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Poppins", sans-serif;
+      font-size: 112px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    #p-flash {
+      position: absolute;
+      inset: 0;
+      background: #064e43;
+    }
+    #p-dip {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+    }
+  </style>
+
+  <div data-hf-id="hf-5rtd" id="root" data-composition-id="paid" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-ol69" id="p-bg"></div>
+
+    <div data-hf-id="hf-8343" id="p-tile" class="tile">
+      <svg data-hf-id="hf-zop5" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path data-hf-id="hf-erfl" d="M4 20v-5M9 20v-8M14 20v-6M19 20V9" />
+        <path data-hf-id="hf-guzf" d="m4 10 5-4 4 3 7-6" />
+        <path data-hf-id="hf-o2jf" d="M16 3h4v4" />
+      </svg>
+    </div>
+    <h2 data-hf-id="hf-4zqa" id="p-title" class="title">
+      <span data-hf-id="hf-rypw" class="w">Get</span> <span data-hf-id="hf-djyu" class="w">Paid</span><br data-hf-id="hf-x5px" />
+      <span data-hf-id="hf-w84n" class="w accent">Faster</span>
+    </h2>
+    <p data-hf-id="hf-dv5n" id="p-sub" class="sub">Better cash flow. Stronger business.</p>
+
+    <div data-hf-id="hf-33o8" class="list">
+      <div data-hf-id="hf-iqbi" class="item p-item">
+        <span data-hf-id="hf-coyi" class="tick"><svg data-hf-id="hf-dy64" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-97jf" class="p-check" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1" /></svg></span>
+        Fewer follow-ups
+      </div>
+      <div data-hf-id="hf-wt6b" class="item p-item">
+        <span data-hf-id="hf-ptha" class="tick"><svg data-hf-id="hf-rv78" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-i2bv" class="p-check" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1" /></svg></span>
+        On-time payments
+      </div>
+      <div data-hf-id="hf-cenh" class="item p-item">
+        <span data-hf-id="hf-q7sb" class="tick"><svg data-hf-id="hf-qoa5" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-ho0u" class="p-check" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1" /></svg></span>
+        Happier customers
+      </div>
+      <div data-hf-id="hf-v8g4" class="item p-item">
+        <span data-hf-id="hf-qm3c" class="tick"><svg data-hf-id="hf-r2l6" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-h9pt" class="p-check" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1" /></svg></span>
+        More time for what matters
+      </div>
+    </div>
+
+    <div data-hf-id="hf-smv5" id="p-pill">
+      <div data-hf-id="hf-lvnr" id="p-pill-text">
+        <svg data-hf-id="hf-2k5w" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path data-hf-id="hf-4tvc" d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.2 2.2 0 0 0-2.9-.1z" />
+          <path data-hf-id="hf-ech2" d="m12 15-3-3a22 22 0 0 1 2-3.9A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+          <path data-hf-id="hf-o2fc" d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.6 4-2c1.1-1.6 0-5 0-5" />
+        </svg>
+        Grow Your Business
+      </div>
+    </div>
+
+    <div data-hf-id="hf-aza9" class="bar p-bar" style="left: 1150px; height: 130px"></div>
+    <div data-hf-id="hf-8z33" class="bar p-bar" style="left: 1286px; height: 215px"></div>
+    <div data-hf-id="hf-qmmh" class="bar p-bar" style="left: 1422px; height: 305px"></div>
+    <div data-hf-id="hf-y2ck" class="bar p-bar" style="left: 1558px; height: 405px"></div>
+    <div data-hf-id="hf-e8ir" class="bar p-bar" style="left: 1694px; height: 520px"></div>
+
+    <svg data-hf-id="hf-j00g" id="p-arrow" viewBox="0 0 1920 1080">
+      <path data-hf-id="hf-vj3f"
+        id="p-arrow-line"
+        d="M1080 700 C 1300 640, 1520 520, 1760 300"
+        fill="none"
+        stroke="#34d399"
+        stroke-width="16"
+        stroke-linecap="round"
+        pathLength="1"
+        stroke-dasharray="1"
+      />
+      <path data-hf-id="hf-4hjx" id="p-arrow-head" d="M1716 270 L1800 262 L1784 346 Z" fill="#34d399" stroke="#34d399" stroke-width="8" stroke-linejoin="round" />
+    </svg>
+
+    <div data-hf-id="hf-utbm" id="p-coin">₹</div>
+
+    <div data-hf-id="hf-2y2e" id="p-flash"></div>
+    <div data-hf-id="hf-5e4v" id="p-dip"></div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // The emerald flood clears to reveal this world.
+    tl.fromTo("#p-flash", { opacity: 1 }, { opacity: 0, duration: 0.35, ease: "power2.out" }, 0);
+
+    tl.fromTo("#p-tile", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.6)" }, 0.12);
+    tl.fromTo(
+      "#p-title .w",
+      { opacity: 0, filter: "blur(6px)" },
+      { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067, ease: "power2.out" },
+      0.25,
+    );
+    tl.fromTo("#p-sub", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 0.55);
+    tl.fromTo(".p-item", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, stagger: 0.12, ease: "power2.out" }, 0.85);
+    tl.fromTo(".p-check", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.25, stagger: 0.12, ease: "power2.out" }, 0.97);
+
+    // Bars grow left to right; the arrow draws over them; the coin lands.
+    tl.fromTo(".p-bar", { scaleY: 0 }, { scaleY: 1, duration: 0.6, stagger: 0.12, ease: "expo.out" }, 0.75);
+    tl.fromTo("#p-arrow-line", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.9, ease: "power2.inOut" }, 1.35);
+    tl.fromTo("#p-arrow-head", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.4)", transformOrigin: "50% 50%" }, 2.15);
+    tl.fromTo("#p-coin", { opacity: 0, scale: 0.3, rotation: -25 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(1.8)" }, 2.2);
+
+    tl.fromTo("#p-pill", { opacity: 0, scaleX: 0.25, transformOrigin: "0% 50%" }, { opacity: 1, scaleX: 1, duration: 0.5, ease: "power3.out" }, 2.45);
+    tl.fromTo("#p-pill-text", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 2.75);
+
+    // Dip: the frame darkens for three frames, then the hard cut to the end card.
+    tl.fromTo("#p-dip", { opacity: 0 }, { opacity: 0.4, duration: 0.1, ease: "none" }, 4.3);
+
+    window.__timelines["paid"] = tl;
+  </script>
+</template>

@@ -10,21 +10,17 @@ import { cn } from "@/lib/utils";
 type NavItem = { label: string; section: string; page?: "/pricing" };
 
 const NAV: NavItem[] = [
-  { label: "Product", section: "demo" },
-  { label: "How it works", section: "how" },
-  { label: "Pricing", section: "pricing", page: "/pricing" },
+  { label: "Product", section: "product" },
+  { label: "How It Works", section: "how" },
+  { label: "Pricing", section: "pricing" },
   { label: "FAQ", section: "faq" },
 ];
 
-// Landing-page sections and the nav item each one belongs to.
+// Landing-page sections and the nav item each one belongs to ("" = none highlighted).
 const SECTION_TO_NAV: Record<string, string> = {
-  demo: "demo",
-  problem: "demo",
-  compare: "demo",
-  reminders: "demo",
-  preview: "demo",
-  features: "demo",
+  product: "product",
   how: "how",
+  demo: "",
   pricing: "pricing",
   faq: "faq",
   "get-started": "",
@@ -55,10 +51,10 @@ function useActiveSection(enabled: boolean) {
 }
 
 function NavLink({ item, active, className, onNavigate }: { item: NavItem; active: boolean; className?: string; onNavigate?: () => void }) {
+  // Pill links: the active one becomes a solid light pill inside the nav capsule.
   const shared = cn(
-    "relative rounded-md px-1 py-1 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-    "after:absolute after:inset-x-1 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:scale-x-100",
-    active && "text-foreground after:scale-x-100",
+    "rounded-full px-4 py-1.5 transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+    active ? "bg-foreground text-background hover:text-background" : "hover:bg-white/[0.06]",
     className,
   );
   const ariaCurrent = active ? ("true" as const) : undefined;
@@ -70,7 +66,7 @@ function NavLink({ item, active, className, onNavigate }: { item: NavItem; activ
     );
   }
   return (
-    <Link to="/" hash={item.section} className={shared} aria-current={ariaCurrent} onClick={onNavigate}>
+    <Link to="/" hash={item.section} activeOptions={{ includeHash: true }} className={shared} aria-current={ariaCurrent} onClick={onNavigate}>
       {item.label}
     </Link>
   );
@@ -103,7 +99,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <BrandMark />
 
-        <nav aria-label="Main" className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
+        <nav aria-label="Main" className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] p-1 text-sm font-medium text-muted-foreground backdrop-blur-md md:flex">
           {NAV.map((item) => (
             <NavLink key={item.label} item={item} active={Boolean(isActive(item))} />
           ))}
@@ -140,7 +136,7 @@ export function SiteHeader() {
                     key={item.label}
                     item={item}
                     active={Boolean(isActive(item))}
-                    className="px-2 py-2.5 after:hidden"
+                    className="px-4 py-2.5"
                     onNavigate={() => setMenuOpen(false)}
                   />
                 ))}

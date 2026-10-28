@@ -39,3 +39,7 @@ dist-ssr
 # Local backups and editor/agent settings
 _extras/
 .claude/
+
+# HyperFrames preview snapshots and review frames (regenerated on demand)
+promo-video/.hyperframes/
+promo-video/.thumbnails/

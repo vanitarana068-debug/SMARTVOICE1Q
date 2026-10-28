@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { formatInvoiceNumber, invoiceTotals, lineAmounts, type LineInput } from "@/lib/invoice-math";
 import { num, todayISO } from "@/lib/format";
+import type { InvoiceDoc } from "@/lib/invoice-doc";
 
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 export type Customer = Database["public"]["Tables"]["customers"]["Row"];
@@ -79,6 +80,33 @@ export function useUpcomingReminders(uid: string) {
           .limit(5),
       ),
   });
+}
+
+/**
+ * Load one saved invoice with its lines and client, ready for PDF export.
+ * Place of supply comes from the first two digits (state code) of both GSTINs when both are known.
+ */
+export async function fetchInvoiceDoc(invoiceId: string, profile: Profile): Promise<InvoiceDoc> {
+  const inv = unwrap(
+    await supabase.from("invoices").select("invoice_number, issue_date, due_date, notes, customers(name, email, gstin)").eq("id", invoiceId).single(),
+  );
+  const items = unwrap(
+    await supabase.from("invoice_items").select("description, quantity, unit_price, tax_rate").eq("invoice_id", invoiceId).order("position"),
+  );
+  const ours = profile.gstin?.slice(0, 2);
+  const theirs = inv.customers?.gstin?.slice(0, 2);
+  return {
+    fromName: profile.business_name,
+    clientName: inv.customers?.name ?? "Client",
+    clientEmail: inv.customers?.email ?? undefined,
+    invoiceNumber: inv.invoice_number,
+    invoiceDate: inv.issue_date,
+    dueDate: inv.due_date,
+    gstRate: num(items[0]?.tax_rate ?? 0),
+    supply: ours && theirs && ours !== theirs ? "inter" : "intra",
+    notes: inv.notes ?? undefined,
+    lines: items.map((it) => ({ description: it.description, quantity: num(it.quantity), unitPrice: num(it.unit_price), taxRate: num(it.tax_rate) })),
+  };
 }
 
 function useInvalidate(uid: string) {

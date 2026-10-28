@@ -1,30 +1,33 @@
-import { useEffect, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowDown, ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, PlayCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PricingTiers } from "@/components/pricing-tiers";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
-import { InvoicePlayground } from "@/components/site/invoice-playground";
-import { ChasingCalculator } from "@/components/site/chasing-calculator";
-import { ReminderTimeline } from "@/components/site/reminder-timeline";
-import { FeatureBento } from "@/components/site/feature-bento";
+import { HeroVisual } from "@/components/site/hero-visual";
+import { InvoicePreviewDialog } from "@/components/site/invoice-preview-dialog";
+import { FeatureGrid } from "@/components/site/feature-grid";
 import { HowItWorks } from "@/components/site/how-it-works";
+import { InvoiceDemo } from "@/components/site/invoice-demo";
 import { Faq } from "@/components/site/faq";
 import { SectionHeading } from "@/components/site/section-heading";
-import { Reveal } from "@/components/site/reveal";
-import { BeforeAfter } from "@/components/site/before-after";
-import { DashboardPreview } from "@/components/site/dashboard-preview";
-import { TrustStrip } from "@/components/site/trust-strip";
+import { Reveal, prefersReducedMotion } from "@/components/site/reveal";
 import { useAuth } from "@/hooks/use-auth";
+import { SAMPLE_INVOICE } from "@/lib/invoice-doc";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "SmartInvoice — Create invoices faster, get paid on time" },
-      { name: "description", content: "Professional invoices, payment tracking and automated reminders for freelancers, consultants and small agencies. Create invoices faster and stop chasing clients manually." },
-      { property: "og:title", content: "SmartInvoice — Create invoices faster, get paid on time" },
-      { property: "og:description", content: "Professional invoices, payment tracking and automated reminders — from ₹0 to ₹2,499/month." },
+      { title: "SmartInvoice — Get paid on time, without the chasing" },
+      {
+        name: "description",
+        content:
+          "Create professional GST-ready invoices, track payments, and automate polite overdue reminders, all from one simple dashboard. Built for freelancers, consultants and growing agencies.",
+      },
+      { property: "og:title", content: "SmartInvoice — Get paid on time, without the chasing" },
+      { property: "og:description", content: "GST-ready invoices, payment tracking and polite reminders for freelancers and agencies. Try the live demo, no sign-up needed." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -32,9 +35,19 @@ export const Route = createFileRoute("/")({
   component: LandingPage,
 });
 
+/** One container and one vertical rhythm for every section. */
+const CONTAINER = "mx-auto w-full max-w-6xl px-5 sm:px-8";
+const SECTION = "scroll-mt-24 py-24 sm:py-28";
 const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as CSSProperties;
 
-const REMINDER_POINTS = ["Never two reminders at the same stage", "Pauses automatically when an invoice is paid", "Full delivery history for every invoice", "Your own message templates"];
+/** Scroll to the live demo; optionally put the cursor in its first field. */
+function goToDemo(focus = false) {
+  const el = document.getElementById("demo");
+  if (!el) return;
+  el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
+  history.replaceState(null, "", "#demo");
+  if (focus) window.setTimeout(() => el.querySelector<HTMLInputElement>("form input")?.focus({ preventScroll: true }), 600);
+}
 
 function LandingPage() {
   // Signed-in users treat the site's front page as their workspace.
@@ -44,176 +57,126 @@ function LandingPage() {
     if (user) void navigate({ to: "/dashboard", replace: true });
   }, [user, navigate]);
 
+  const [previewOpen, setPreviewOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen overflow-x-clip bg-background">
       <SiteHeader />
 
       <main>
-        {/* Hero: the promise, then the product itself, editable in place */}
-        <section className="mx-auto max-w-6xl px-4 pb-20 pt-12 sm:px-6 sm:pt-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <p className="animate-rise mx-auto w-fit rounded-full border border-success/30 bg-success/10 px-3 py-1 text-xs font-medium text-success" style={delay(0)}>
-              For freelancers, consultants &amp; small agencies
+        {/* Hero */}
+        <section className={cn(CONTAINER, "grid items-center gap-14 pb-20 pt-10 sm:pt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-12 lg:pb-28 lg:pt-20")}>
+          <div className="max-w-xl">
+            <p className="animate-rise inline-flex items-center gap-2 rounded-full border border-border bg-white/[0.03] px-3 py-1 text-xs font-medium text-muted-foreground" style={delay(0)}>
+              <span className="h-1.5 w-1.5 rounded-full bg-[#22d3ee]" /> GST-ready invoicing for India
             </p>
-            <h1 className="animate-rise mt-6 font-display text-5xl leading-[0.98] tracking-tight text-foreground sm:text-7xl lg:text-[5.5rem]" style={delay(80)}>
-              Get paid on time,
-              <br />
-              <em className="bg-gradient-to-r from-[#23476a] via-[#2a68a8] to-[#4a95db] bg-clip-text pr-2 text-transparent">without the chasing.</em>
+            <h1 className="animate-rise mt-6 font-display text-[2.75rem] leading-[1.05] text-foreground sm:text-6xl lg:text-[4rem]" style={delay(80)}>
+              Get Paid On Time, <em>Without the Chasing.</em>
             </h1>
-            <p className="animate-rise mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground" style={delay(180)}>
-              Create a GST-ready invoice in minutes. SmartInvoice tracks every payment and sends polite follow-ups on your schedule, and stops the moment your client pays.
+            <p className="animate-rise mt-6 text-lg leading-relaxed text-muted-foreground" style={delay(160)}>
+              Create professional GST-ready invoices, track payments, and automate polite overdue reminders — all from one simple dashboard.
             </p>
-            <div className="animate-rise mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row" style={delay(260)}>
-              <Button asChild size="lg" className="h-12 min-w-48 px-8 text-base">
+            <div className="animate-rise mt-9 flex flex-col gap-3 sm:flex-row" style={delay(240)}>
+              <Button asChild size="lg" className="h-12 px-7 text-base">
                 <Link to="/signup">
-                  Start free <ArrowRight />
+                  Start Free <ArrowRight />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="ghost" className="h-12 min-w-48 text-base">
-                <a href="#demo">
-                  Try the live invoice <ArrowDown />
-                </a>
+              <Button type="button" size="lg" variant="outline" className="h-12 px-7 text-base" onClick={() => goToDemo(true)}>
+                <PlayCircle /> Try Live Demo
               </Button>
             </div>
-            <p className="animate-rise mt-4 text-xs text-muted-foreground" style={delay(320)}>
-              Free plan · no card required · upgrade from ₹499/month
+            <p className="animate-rise mt-6 flex items-center gap-2 text-sm text-muted-foreground" style={delay(320)}>
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-[#34d399]" />
+              Built for freelancers, consultants and growing agencies.
             </p>
           </div>
 
-          <div id="demo" className="animate-rise mt-16 scroll-mt-24 sm:mt-20" style={delay(420)}>
-            <InvoicePlayground />
-          </div>
-
-          <div className="mt-16 sm:mt-20">
-            <TrustStrip />
-          </div>
+          <HeroVisual onViewInvoice={() => setPreviewOpen(true)} onCreateInvoice={() => goToDemo(true)} />
         </section>
 
-        {/* Problem: the visitor quantifies their own chasing time */}
-        <section id="problem" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6 sm:py-28">
-          <SectionHeading eyebrow="The problem" title={<>Chasing payments is unpaid work.</>}>
-            Every late invoice means another reminder to write, another call to make, another bank check. Put in your own numbers.
-          </SectionHeading>
-          <Reveal className="mt-12" delay={120}>
-            <ChasingCalculator />
-          </Reveal>
-        </section>
-
-        {/* Differentiation: the manual routine vs SmartInvoice, side by side */}
-        <section id="compare" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6 sm:py-28">
-          <SectionHeading eyebrow="Why it's different" title={<>Same work, <em>none of the admin.</em></>}>
-            Flip between how invoicing usually goes and how it goes here.
-          </SectionHeading>
-          <Reveal className="mt-12" delay={120}>
-            <BeforeAfter />
-          </Reveal>
-        </section>
-
-        {/* Solution: the follow-up series, stage by stage */}
-        <section id="reminders" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6 sm:py-28">
-          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.4fr] lg:gap-16">
-            <div className="lg:sticky lg:top-28 lg:self-start">
-              <SectionHeading eyebrow="Automated follow-ups" title={<>The follow-up you never have to <em>write</em>.</>}>
-                Pick when reminders go out. Each one is polite, includes the amount and due date, and the series stops when payment lands.
-              </SectionHeading>
-              <Reveal delay={120}>
-                <ul className="mt-8 grid gap-3 text-sm">
-                  {REMINDER_POINTS.map((point) => (
-                    <li key={point} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-success" />
-                      <span className="text-foreground">{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            </div>
-            <Reveal delay={160} className="rounded-3xl border bg-card/50 p-5 backdrop-blur-sm sm:p-8">
-              <p className="mb-6 text-sm text-muted-foreground">Select a stage to read the email your client receives.</p>
-              <ReminderTimeline />
-            </Reveal>
-          </div>
-        </section>
-
-        {/* Features in varied compositions */}
-        <section id="features" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6 sm:py-28">
-          <SectionHeading eyebrow="Everything in one place" title="Bill, track and collect.">
-            No payroll. No ERP. Just focused tools for invoicing, payments and follow-ups. Each one below is interactive.
+        {/* Product features */}
+        <section id="product" className={cn(CONTAINER, SECTION)}>
+          <SectionHeading eyebrow="Product" title={<>Everything you need to <em>bill and get paid.</em></>}>
+            Focused tools for invoicing, payments and follow-ups. No payroll, no ERP.
           </SectionHeading>
           <div className="mt-12">
-            <FeatureBento />
+            <FeatureGrid />
           </div>
         </section>
 
-        <section id="preview" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6 sm:py-28">
-          <div className="grid gap-10 lg:grid-cols-[0.75fr_1.6fr] lg:items-center lg:gap-14">
-            <SectionHeading eyebrow="Your dashboard" title={<>Everything owed to you, <em>on one screen.</em></>}>
-              This is the dashboard you get after signing up, shown with sample data. Filter the list, mark a draft as sent, or record a payment and watch the totals move.
-            </SectionHeading>
-            <Reveal delay={120}>
-              <DashboardPreview />
-            </Reveal>
-          </div>
-        </section>
-
-        <section id="how" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6 sm:py-28">
-          <SectionHeading eyebrow="How it works" title="Three steps, then it runs itself." />
+        {/* How it works */}
+        <section id="how" className={cn(CONTAINER, SECTION)}>
+          <SectionHeading eyebrow="How it works" title={<>From finished work to <em>money in.</em></>} />
           <div className="mt-14">
             <HowItWorks />
           </div>
         </section>
 
-        <section id="pricing" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6 sm:py-28">
-          <SectionHeading align="center" eyebrow="Pricing" title="Simple pricing in rupees.">
-            Start free. Upgrade when your billing outgrows it.
+        {/* Interactive demo */}
+        <section id="demo" className={cn(CONTAINER, SECTION)}>
+          <SectionHeading eyebrow="Live demo" title={<>Create an invoice. <em>No sign-up needed.</em></>}>
+            Fill in the details and watch the invoice build itself, with GST and totals calculated from what you enter. Download it as a PDF when you&apos;re done.
           </SectionHeading>
-          <Reveal className="mt-14" delay={120}>
-            <PricingTiers compact />
+          <div className="mt-12">
+            <InvoiceDemo />
+          </div>
+        </section>
+
+        {/* Pricing */}
+        <section id="pricing" className={cn(CONTAINER, SECTION)}>
+          <SectionHeading align="center" eyebrow="Pricing" title={<>Simple pricing <em>in rupees.</em></>}>
+            Start free. Move up when your billing grows.
+          </SectionHeading>
+          <Reveal className="mt-14" delay={100}>
+            <PricingTiers />
           </Reveal>
-          <p className="mt-8 text-center text-sm text-muted-foreground">
-            Not sure which plan fits?{" "}
-            <Link to="/pricing" className="font-medium text-primary underline-offset-4 hover:underline">
-              Answer four quick questions
+          <p className="mt-4 text-center text-sm">
+            <Link to="/pricing" className="font-medium text-[var(--primary-text)] underline-offset-4 hover:underline">
+              Not sure which plan fits? Answer four quick questions →
             </Link>
           </p>
         </section>
 
-        <section id="faq" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6 sm:py-28">
-          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.4fr] lg:gap-16">
+        {/* FAQ */}
+        <section id="faq" className={cn(CONTAINER, SECTION)}>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.4fr)] lg:gap-16">
             <SectionHeading eyebrow="FAQ" title="Questions, answered.">
-              Can&apos;t find what you need?{" "}
-              <Link to="/signup" className="text-primary underline-offset-4 hover:underline">
-                Start free
-              </Link>{" "}
-              and look around. There&apos;s no card to enter.
+              Still unsure? Try the live demo above. There&apos;s nothing to sign up for.
             </SectionHeading>
-            <Reveal delay={120}>
+            <Reveal delay={100}>
               <Faq />
             </Reveal>
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section id="get-started" className="mx-auto max-w-6xl px-4 pb-24 pt-8 sm:px-6">
-          <Reveal className="relative overflow-hidden rounded-[2rem] border border-primary/40 bg-gradient-to-br from-primary/30 via-card to-card px-6 py-16 text-center shadow-lifted sm:px-12 sm:py-20">
-            <h2 className="mx-auto max-w-3xl font-display text-4xl leading-[1.05] tracking-tight text-foreground sm:text-6xl">
-              Send the invoice. <em>Let the follow-ups handle themselves.</em>
-            </h2>
-            <p className="mx-auto mt-5 max-w-xl text-muted-foreground">Set up your business in a few minutes and send your first invoice today.</p>
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button asChild size="lg" className="h-12 min-w-48 px-8 text-base">
-                <Link to="/signup">
-                  Create your free account <ArrowRight />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="h-12 min-w-48 text-base">
-                <Link to="/pricing">Compare plans</Link>
-              </Button>
+        {/* Final call to action */}
+        <section id="get-started" className={cn(CONTAINER, "pb-28 pt-8")}>
+          <Reveal className="relative overflow-hidden rounded-[2rem] border border-border bg-[#0b1220] px-6 py-16 text-center sm:px-12 sm:py-20">
+            <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 h-72 w-[46rem] max-w-[140%] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(59_130_246/0.45),rgb(34_211_238/0.15),transparent)] blur-2xl" />
+            <div className="relative">
+              <h2 className="mx-auto max-w-3xl font-display text-4xl leading-[1.08] text-foreground sm:text-5xl">
+                Spend Less Time <em>Chasing Payments.</em>
+              </h2>
+              <p className="mx-auto mt-5 max-w-xl text-lg text-muted-foreground">Create your first invoice and build a smoother payment workflow.</p>
+              <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Button asChild size="lg" className="h-12 px-7 text-base">
+                  <Link to="/signup">
+                    Start Free <ArrowRight />
+                  </Link>
+                </Button>
+                <Button type="button" size="lg" variant="outline" className="h-12 px-7 text-base" onClick={() => goToDemo(true)}>
+                  <PlayCircle /> Explore Live Demo
+                </Button>
+              </div>
             </div>
           </Reveal>
         </section>
       </main>
 
       <SiteFooter />
+
+      <InvoicePreviewDialog doc={SAMPLE_INVOICE} badge="Sent" open={previewOpen} onOpenChange={setPreviewOpen} onCreateOwn={() => goToDemo(true)} />
     </div>
   );
 }

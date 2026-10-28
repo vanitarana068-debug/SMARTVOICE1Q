@@ -2,9 +2,9 @@ import type { CSSProperties } from "react";
 import { useInView } from "@/components/site/reveal";
 
 const STEPS = [
-  { title: "Add your business and clients", body: "Set up your business details and logo once, then add client contacts as you go. The free plan covers up to five clients." },
-  { title: "Create and send the invoice", body: "Add line items, let GST calculate itself, preview, then download the PDF or send it straight to your client." },
-  { title: "Follow-ups run until it's paid", body: "Reminders go out on the schedule you chose. Record a payment and the series stops on its own." },
+  { title: "Add your client and invoice details", body: "Save your business details once, add the client, then list the work with quantities, prices and the GST rate." },
+  { title: "Generate and send a professional invoice", body: "SmartInvoice calculates the GST and totals. Preview it, download the PDF and send it to your client." },
+  { title: "Track payments and follow up", body: "Record payments as they arrive. Overdue invoices stand out on your dashboard so you know who to follow up with." },
 ];
 
 export function HowItWorks() {

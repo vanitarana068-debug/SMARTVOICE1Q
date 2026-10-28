@@ -1,0 +1,626 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #fff;
+    }
+    #h-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(900px 640px at 74% 44%, rgba(29, 63, 214, 0.55), transparent 70%),
+        radial-gradient(700px 500px at 10% 10%, rgba(59, 130, 246, 0.18), transparent 70%),
+        linear-gradient(160deg, #0b1650 0%, #050a24 60%, #040820 100%);
+    }
+    #h-stage {
+      position: absolute;
+      inset: 0;
+    }
+    .h-tile {
+      position: absolute;
+      left: 110px;
+      top: 116px;
+      width: 150px;
+      height: 150px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #38bdf8 0%, #6366f1 55%, #8b5cf6 100%);
+      box-shadow: 0 24px 50px -18px rgba(99, 102, 241, 0.8), inset 0 2px 0 rgba(255, 255, 255, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .h-tile svg {
+      width: 84px;
+      height: 84px;
+    }
+    #h-title {
+      position: absolute;
+      left: 292px;
+      top: 104px;
+      width: 700px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      font-size: 84px;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+    }
+    .w {
+      display: inline-block;
+    }
+    .grad-a {
+      background: linear-gradient(90deg, #38bdf8, #6d8bff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .grad-b {
+      background: linear-gradient(90deg, #7c83ff, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    #h-sub {
+      position: absolute;
+      left: 110px;
+      top: 318px;
+      width: 820px;
+      font-size: 38px;
+      line-height: 1.38;
+      color: rgba(219, 228, 255, 0.9);
+    }
+    #h-feat {
+      position: absolute;
+      left: 96px;
+      top: 548px;
+      display: flex;
+      gap: 18px;
+    }
+    .feat {
+      width: 196px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      text-align: center;
+    }
+    .feat-ring {
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(96, 165, 250, 0.35), rgba(37, 99, 235, 0.18));
+      border: 2px solid rgba(96, 165, 250, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bfdbfe;
+    }
+    .feat-ring svg {
+      width: 48px;
+      height: 48px;
+    }
+    .feat-label {
+      font-size: 30px;
+      line-height: 1.15;
+      color: #e8eeff;
+    }
+    #h-cta {
+      position: absolute;
+      left: 110px;
+      top: 830px;
+      width: 470px;
+      height: 104px;
+      border-radius: 52px;
+      background: linear-gradient(90deg, #3b82f6, #6366f1);
+      box-shadow: 0 20px 44px -16px rgba(79, 70, 229, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      font-size: 38px;
+      font-weight: 600;
+    }
+    #h-cta-text {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Laptop */
+    #h-laptop {
+      position: absolute;
+      left: 945px;
+      top: 210px;
+      width: 800px;
+    }
+    .lt-bezel {
+      width: 800px;
+      height: 528px;
+      background: #1b1f2a;
+      border-radius: 24px;
+      padding: 14px;
+      box-shadow: 0 50px 90px -30px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(255, 255, 255, 0.06);
+    }
+    .lt-screen {
+      width: 100%;
+      height: 100%;
+      background: #f6f8fc;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      color: #0f172a;
+    }
+    .lt-base {
+      width: 940px;
+      height: 26px;
+      margin-left: -60px;
+      background: linear-gradient(180deg, #d4d9e2, #8b93a3);
+      border-radius: 0 0 22px 22px;
+    }
+    .lt-side {
+      width: 140px;
+      background: #0f1a3d;
+      color: #c7d2fe;
+      padding: 18px 12px;
+      font-size: 14px;
+    }
+    .lt-brand {
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .lt-brand i {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      background: linear-gradient(135deg, #38bdf8, #8b5cf6);
+      display: inline-block;
+    }
+    .lt-nav {
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin-bottom: 4px;
+    }
+    .lt-nav.on {
+      background: rgba(99, 102, 241, 0.35);
+      color: #fff;
+    }
+    .lt-main {
+      flex: 1;
+      padding: 18px 20px;
+    }
+    .lt-h {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .kpis {
+      display: flex;
+      gap: 10px;
+    }
+    .kpi {
+      width: 152px;
+      background: #fff;
+      border: 1px solid #e6ebf5;
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    .kpi-l {
+      font-size: 14px;
+      color: #64748b;
+    }
+    .kpi-v {
+      font-size: 26px;
+      font-weight: 800;
+      margin-top: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+    .kpi-d {
+      font-size: 13px;
+      color: #12843c;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+    .card {
+      width: 476px;
+      background: #fff;
+      border: 1px solid #e6ebf5;
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-top: 12px;
+    }
+    .card-h {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .tbl-head,
+    .tbl-row {
+      display: grid;
+      grid-template-columns: 82px 158px 92px 1fr;
+      align-items: center;
+      font-size: 14px;
+    }
+    .tbl-head {
+      color: #64748b;
+      font-size: 12px;
+      margin: 6px 0 2px;
+    }
+    .tbl-row {
+      height: 25px;
+      border-top: 1px solid #f1f5f9;
+    }
+    .chip {
+      justify-self: start;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 999px;
+    }
+    .paid {
+      color: #16a34a;
+      background: #dcfce7;
+    }
+    .pending {
+      color: #c2410c;
+      background: #ffedd5;
+    }
+    .overdue {
+      color: #dc2626;
+      background: #fee2e2;
+    }
+
+    /* Phone */
+    #h-phone {
+      position: absolute;
+      left: 1572px;
+      top: 352px;
+      width: 252px;
+      height: 528px;
+      background: #0b1020;
+      border-radius: 48px;
+      padding: 10px;
+      box-shadow: 0 50px 90px -24px rgba(0, 0, 0, 0.85), 0 0 0 2px rgba(255, 255, 255, 0.12);
+    }
+    .ph-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      border-radius: 40px;
+      overflow: hidden;
+      color: #0f172a;
+      padding: 20px 16px;
+    }
+    .ph-status {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .ph-notch {
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      width: 90px;
+      height: 24px;
+      margin-left: -45px;
+      background: #0b1020;
+      border-radius: 14px;
+    }
+    .ph-title {
+      font-size: 23px;
+      font-weight: 800;
+      margin: 22px 0 12px;
+    }
+    .ph-field {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 7px 11px;
+      margin-bottom: 10px;
+    }
+    .ph-l {
+      font-size: 14px;
+      color: #64748b;
+    }
+    .ph-v {
+      font-size: 19px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    #h-ph-btn {
+      position: absolute;
+      left: 16px;
+      top: 380px;
+      width: 200px;
+      height: 50px;
+      border-radius: 14px;
+      background: #2f6bff;
+      color: #fff;
+      font-size: 19px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 22px -10px rgba(47, 107, 255, 0.9);
+    }
+    .ph-tabs {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 58px;
+      border-top: 1px solid #eef2f7;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+    .ph-tabs .on {
+      color: #2f6bff;
+      font-weight: 700;
+    }
+
+    #h-cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 62px;
+      height: 62px;
+      z-index: 20;
+    }
+    #h-zoom {
+      position: absolute;
+      left: 1598px;
+      top: 742px;
+      width: 200px;
+      height: 50px;
+      border-radius: 14px;
+      background: #2f6bff;
+      transform-origin: 50% 50%;
+      opacity: 0;
+      z-index: 30;
+    }
+  </style>
+
+  <div data-hf-id="hf-bmfv" id="root" data-composition-id="hero" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-yv21" id="h-bg"></div>
+
+    <div data-hf-id="hf-suuy" id="h-stage">
+      <!-- App icon: document + pen -->
+      <div data-hf-id="hf-o32l" id="h-icon" class="h-tile">
+        <svg data-hf-id="hf-mih4" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path data-hf-id="hf-18du" d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4" />
+          <path data-hf-id="hf-uhau" d="M14 3l5 5v3" />
+          <path data-hf-id="hf-ajck" d="M8.5 9h4M8.5 13h6M8.5 17h2.5" />
+          <path data-hf-id="hf-nox4" d="M19.2 13.3a1.8 1.8 0 0 1 2.5 2.5L16.4 21l-3.2.8.8-3.2z" />
+        </svg>
+      </div>
+
+      <h1 data-hf-id="hf-vjcs" id="h-title">
+        <span data-hf-id="hf-gxux" class="w">Smart</span> <span data-hf-id="hf-odfv" class="w">Invoice</span> <span data-hf-id="hf-yncq" class="w">&amp;</span><br data-hf-id="hf-x5px" />
+        <span data-hf-id="hf-bmav" class="w grad-a">Follow-Up</span> <span data-hf-id="hf-l6bw" class="w grad-b">App</span>
+      </h1>
+
+      <p data-hf-id="hf-crua" id="h-sub">Create invoices, track payment status, and automate polite overdue-payment reminders.</p>
+
+      <div data-hf-id="hf-n92g" id="h-feat">
+        <div data-hf-id="hf-vrs0" class="feat">
+          <div data-hf-id="hf-1brf" class="feat-ring">
+            <svg data-hf-id="hf-c53f" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path data-hf-id="hf-igg3" d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+              <path data-hf-id="hf-278v" d="M14 3v5h5M9 13h6M9 17h4" />
+            </svg>
+          </div>
+          <div data-hf-id="hf-yb1d" class="feat-label">Create<br data-hf-id="hf-rsrt" />Invoices</div>
+        </div>
+        <div data-hf-id="hf-75ug" class="feat">
+          <div data-hf-id="hf-mazv" class="feat-ring">
+            <svg data-hf-id="hf-f417" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect data-hf-id="hf-8t75" x="3" y="5" width="18" height="16" rx="2" />
+              <path data-hf-id="hf-6yhn" d="M16 3v4M8 3v4M3 10h18" />
+              <path data-hf-id="hf-o3qt" d="m9 15 2 2 4-4" />
+            </svg>
+          </div>
+          <div data-hf-id="hf-72qb" class="feat-label">Track<br data-hf-id="hf-szow" />Payments</div>
+        </div>
+        <div data-hf-id="hf-5yxd" class="feat">
+          <div data-hf-id="hf-lwou" class="feat-ring">
+            <svg data-hf-id="hf-epq6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path data-hf-id="hf-kh1t" d="M6 9a6 6 0 0 1 12 0c0 6.5 3 8.5 3 8.5H3S6 15.5 6 9" />
+              <path data-hf-id="hf-k99i" d="M10.3 21a1.9 1.9 0 0 0 3.4 0" />
+            </svg>
+          </div>
+          <div data-hf-id="hf-r8pa" class="feat-label">Automate<br data-hf-id="hf-sldv" />Reminders</div>
+        </div>
+        <div data-hf-id="hf-6d8e" class="feat">
+          <div data-hf-id="hf-lidt" class="feat-ring">
+            <svg data-hf-id="hf-ebf5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path data-hf-id="hf-2hwq" d="M4 20V14M9 20V10M14 20v-4M19 20V7" />
+              <path data-hf-id="hf-3cu0" d="m4 9 5-4 4 3 7-5" />
+            </svg>
+          </div>
+          <div data-hf-id="hf-9cne" class="feat-label">Get Paid<br data-hf-id="hf-qluq" />Faster</div>
+        </div>
+      </div>
+
+      <div data-hf-id="hf-3sri" id="h-cta">
+        <div data-hf-id="hf-qi3z" id="h-cta-text">
+          Simplify Your Billing
+          <svg data-hf-id="hf-hheg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path data-hf-id="hf-m7n8" d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Laptop with the dashboard -->
+      <div data-hf-id="hf-gbr8" id="h-laptop">
+        <div data-hf-id="hf-5msn" class="lt-bezel">
+          <div data-hf-id="hf-b0ah" class="lt-screen">
+            <div data-hf-id="hf-8dcc" class="lt-side">
+              <div data-hf-id="hf-jzvg" class="lt-brand"><i data-hf-id="hf-wt6k"></i>SmartInvoice</div>
+              <div data-hf-id="hf-viml" class="lt-nav on">Dashboard</div>
+              <div data-hf-id="hf-0b00" class="lt-nav">Invoices</div>
+              <div data-hf-id="hf-fbn5" class="lt-nav">Customers</div>
+              <div data-hf-id="hf-pqhr" class="lt-nav">Reminders</div>
+              <div data-hf-id="hf-bv6z" class="lt-nav">Reports</div>
+              <div data-hf-id="hf-zwj1" class="lt-nav">Settings</div>
+            </div>
+            <div data-hf-id="hf-kadm" class="lt-main">
+              <div data-hf-id="hf-x841" class="lt-h">Dashboard</div>
+              <div data-hf-id="hf-w3q5" class="kpis">
+                <div data-hf-id="hf-tane" class="kpi">
+                  <div data-hf-id="hf-ze47" class="kpi-l">Total Invoices</div>
+                  <div data-hf-id="hf-jzol" class="kpi-v" id="h-k1" data-to="149500">₹0</div>
+                  <div data-hf-id="hf-mx84" class="kpi-d">↑ 12% from last month</div>
+                </div>
+                <div data-hf-id="hf-4lwu" class="kpi">
+                  <div data-hf-id="hf-ri8f" class="kpi-l">Paid</div>
+                  <div data-hf-id="hf-72ts" class="kpi-v" id="h-k2" data-to="98200" style="color: #16a34a">₹0</div>
+                  <div data-hf-id="hf-fopc" class="kpi-d">↑ 18%</div>
+                </div>
+                <div data-hf-id="hf-507v" class="kpi">
+                  <div data-hf-id="hf-p4lw" class="kpi-l">Pending</div>
+                  <div data-hf-id="hf-wqpv" class="kpi-v" id="h-k3" data-to="32800" style="color: #ea580c">₹0</div>
+                  <div data-hf-id="hf-09qe" class="kpi-d" style="color: #c64b0a">↑ 5%</div>
+                </div>
+              </div>
+              <div data-hf-id="hf-vn2y" class="card">
+                <div data-hf-id="hf-obdq" class="card-h">Monthly Revenue</div>
+                <svg data-hf-id="hf-ti8g" width="446" height="96" viewBox="0 0 600 96" preserveAspectRatio="none">
+                  <defs data-hf-id="hf-mh0t">
+                    <linearGradient data-hf-id="hf-5jbg" id="h-area-g" x1="0" y1="0" x2="0" y2="1">
+                      <stop data-hf-id="hf-pouj" offset="0" stop-color="#2dd4bf" stop-opacity="0.35" />
+                      <stop data-hf-id="hf-e1ni" offset="1" stop-color="#2dd4bf" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path data-hf-id="hf-bq3d" d="M0 92 H600" stroke="#e2e8f0" stroke-width="1" />
+                  <path data-hf-id="hf-77qb"
+                    id="h-area"
+                    d="M0 78 L50 70 L100 74 L150 60 L200 64 L250 50 L300 56 L350 40 L400 46 L450 30 L500 36 L550 18 L600 10 L600 92 L0 92 Z"
+                    fill="url(#h-area-g)"
+                  />
+                  <path data-hf-id="hf-kwgz"
+                    id="h-line"
+                    d="M0 78 L50 70 L100 74 L150 60 L200 64 L250 50 L300 56 L350 40 L400 46 L450 30 L500 36 L550 18 L600 10"
+                    fill="none"
+                    stroke="#14b8a6"
+                    stroke-width="3"
+                    stroke-linejoin="round"
+                    pathLength="1"
+                    stroke-dasharray="1"
+                  />
+                </svg>
+              </div>
+              <div data-hf-id="hf-i08u" class="card">
+                <div data-hf-id="hf-2c5m" class="card-h">Recent Invoices</div>
+                <div data-hf-id="hf-8nex" class="tbl-head"><span data-hf-id="hf-ker3">Invoice No.</span><span data-hf-id="hf-u8kt">Customer</span><span data-hf-id="hf-5mr1">Amount</span><span data-hf-id="hf-1743">Status</span></div>
+                <div data-hf-id="hf-m882" class="tbl-row h-row"><span data-hf-id="hf-w4ce">INV-001</span><span data-hf-id="hf-tnz2">ABC Traders</span><span data-hf-id="hf-4t2o">₹12,500</span><span data-hf-id="hf-lkmg" class="chip paid h-chip">Paid</span></div>
+                <div data-hf-id="hf-e29y" class="tbl-row h-row"><span data-hf-id="hf-winf">INV-002</span><span data-hf-id="hf-9el3">Sunita Enterprises</span><span data-hf-id="hf-a2lr">₹8,900</span><span data-hf-id="hf-zfpc" class="chip pending h-chip">Pending</span></div>
+                <div data-hf-id="hf-egkz" class="tbl-row h-row"><span data-hf-id="hf-wwyg">INV-003</span><span data-hf-id="hf-xkco">Royal Builders</span><span data-hf-id="hf-6sr1">₹25,000</span><span data-hf-id="hf-3x5s" class="chip paid h-chip">Paid</span></div>
+                <div data-hf-id="hf-euw0" class="tbl-row h-row"><span data-hf-id="hf-u4t9">INV-004</span><span data-hf-id="hf-nwys">Green Solutions</span><span data-hf-id="hf-01hm">₹15,750</span><span data-hf-id="hf-y2x2" class="chip overdue h-chip">Overdue</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-hf-id="hf-3u8m" class="lt-base"></div>
+      </div>
+
+      <!-- Phone with the Create Invoice form -->
+      <div data-hf-id="hf-8pc4" id="h-phone">
+        <div data-hf-id="hf-66w1" class="ph-screen">
+          <div data-hf-id="hf-eni1" class="ph-notch"></div>
+          <div data-hf-id="hf-3hcz" class="ph-status"><span data-hf-id="hf-zwmt">9:41</span><span data-hf-id="hf-daxc">●●●</span></div>
+          <div data-hf-id="hf-sxyu" class="ph-title">Create Invoice</div>
+          <div data-hf-id="hf-apej" class="ph-field"><div data-hf-id="hf-x9em" class="ph-l">Customer Name</div><div data-hf-id="hf-9idv" class="ph-v h-type">ABC Traders</div></div>
+          <div data-hf-id="hf-cqjf" class="ph-field"><div data-hf-id="hf-ulkv" class="ph-l">Amount</div><div data-hf-id="hf-n411" class="ph-v h-type">₹12,500</div></div>
+          <div data-hf-id="hf-cc8e" class="ph-field"><div data-hf-id="hf-afvd" class="ph-l">Due Date</div><div data-hf-id="hf-7wlc" class="ph-v h-type">30 Aug 2026</div></div>
+          <div data-hf-id="hf-avdk" id="h-ph-btn">Create Invoice</div>
+          <div data-hf-id="hf-3u25" class="ph-tabs"><span data-hf-id="hf-5sg1" class="on">Home</span><span data-hf-id="hf-xk05">Invoices</span><span data-hf-id="hf-n710">More</span></div>
+        </div>
+      </div>
+    </div>
+
+    <svg data-hf-id="hf-p921" id="h-cursor" viewBox="0 0 24 24" data-layout-ignore>
+      <path data-hf-id="hf-uhet" d="M3 2l16 9.5-7 1.6-3.6 6.6z" fill="#fff" stroke="#0b1020" stroke-width="1.4" stroke-linejoin="round" />
+    </svg>
+
+    <!-- The Create Invoice button, grown past the frame: becomes the next scene's ground -->
+    <div data-hf-id="hf-hbs1" id="h-zoom"></div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+
+    // Icon springs in; title per word; subtitle blurs in as a line.
+    tl.fromTo("#h-icon", { opacity: 1, scale: 0.72 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.6)" }, 0);
+    tl.fromTo(
+      "#h-title .w",
+      { opacity: 0, filter: "blur(6px)" },
+      { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067, ease: "power2.out" },
+      0.35,
+    );
+    tl.fromTo("#h-sub", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 0.95);
+
+    // Features: scale + blur, staggered; CTA morphs open from its left edge.
+    tl.fromTo(
+      ".feat",
+      { opacity: 0, scale: 0.82, filter: "blur(6px)" },
+      { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.45, stagger: 0.08, ease: "expo.out" },
+      1.4,
+    );
+    tl.fromTo("#h-cta", { opacity: 0, scaleX: 0.25, transformOrigin: "0% 50%" }, { opacity: 1, scaleX: 1, duration: 0.5, ease: "power3.out" }, 1.85);
+    tl.fromTo("#h-cta-text", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 2.15);
+
+    // Laptop arrives from the right with a horizontal smear.
+    tl.fromTo("#h-laptop", { opacity: 0, x: 220, filter: "blur(10px)" }, { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.8, ease: "expo.out" }, 1.15);
+
+    // KPIs count up.
+    ["#h-k1", "#h-k2", "#h-k3"].forEach((sel, i) => {
+      const el = document.querySelector(sel);
+      const to = Number(el.dataset.to);
+      const o = { v: 0 };
+      tl.fromTo(o, { v: 0 }, { v: to, duration: 0.9, ease: "power2.out", onUpdate: () => (el.textContent = inr(o.v)) }, 1.75 + i * 0.12);
+    });
+
+    // Revenue line draws, area follows.
+    tl.fromTo("#h-line", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, 2.0);
+    tl.fromTo("#h-area", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 2.6);
+
+    // Table rows, then status chips pop.
+    tl.fromTo(".h-row", { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.35, stagger: 0.08, ease: "power3.out" }, 2.35);
+    tl.fromTo(".h-chip", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, stagger: 0.08, ease: "back.out(2)" }, 2.75);
+
+    // Phone rises in front of the laptop; its fields fill one by one.
+    tl.fromTo("#h-phone", { opacity: 0, y: 260 }, { opacity: 1, y: 0, duration: 0.75, ease: "expo.out" }, 3.0);
+    tl.fromTo(
+      ".h-type",
+      { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", duration: 0.35, stagger: 0.38, ease: "power1.out" },
+      3.65,
+    );
+    tl.fromTo("#h-ph-btn", { opacity: 0.35 }, { opacity: 1, duration: 0.25 }, 4.75);
+
+    // Cursor enters from off-screen and clicks Create Invoice.
+    tl.fromTo("#h-cursor", { x: 1980, y: 1140 }, { x: 1702, y: 770, duration: 0.8, ease: "power3.out" }, 4.95);
+    tl.to("#h-cursor", { scale: 0.86, duration: 0.08, ease: "power2.in", transformOrigin: "0% 0%" }, 5.85);
+    tl.to("#h-cursor", { scale: 1, duration: 0.14, ease: "power2.out" }, 5.93);
+    tl.to("#h-ph-btn", { scale: 0.94, backgroundColor: "#1f4fd8", duration: 0.08, ease: "power2.in" }, 5.86);
+    tl.to("#h-ph-btn", { scale: 1, duration: 0.16, ease: "back.out(2)" }, 5.94);
+
+    // Zoom through the button: it grows past the frame and becomes the next world.
+    tl.set("#h-zoom", { opacity: 1 }, 6.4);
+    tl.to("#h-cursor", { opacity: 0, duration: 0.12 }, 6.4);
+    tl.fromTo("#h-zoom", { scale: 1, borderRadius: 14, backgroundColor: "#2f6bff" }, { scale: 40, borderRadius: 0, backgroundColor: "#2346e8", duration: 0.55, ease: "power3.in" }, 6.42);
+    tl.to("#h-stage", { filter: "blur(14px)", opacity: 0.4, duration: 0.3, ease: "power2.in" }, 6.42);
+
+    window.__timelines["hero"] = tl;
+  </script>
+</template>

@@ -6,9 +6,9 @@ import type { TierName } from "@/components/pricing-tiers";
 export type PlanAnswers = { customers: number; reminders: boolean; recurring: boolean; team: boolean };
 
 export function recommendPlan(a: PlanAnswers): { plan: TierName; reason: string } {
-  if (a.team) return { plan: "Agency", reason: "You need more than one person working in the account." };
-  if (a.customers > 5) return { plan: "Pro", reason: `The free plan covers 5 customers and you bill ${a.customers}.` };
-  if (a.reminders || a.recurring) return { plan: "Pro", reason: "Automated reminders and recurring invoices are part of Pro." };
+  if (a.team) return { plan: "Growth", reason: "Team features are planned for Growth." };
+  if (a.customers > 5) return { plan: "Starter", reason: `The free plan covers 5 clients and you bill ${a.customers}.` };
+  if (a.reminders || a.recurring) return { plan: "Starter", reason: "Reminder scheduling is part of Starter." };
   return { plan: "Free", reason: "Up to 5 customers with manual follow-ups fits the free plan." };
 }
 

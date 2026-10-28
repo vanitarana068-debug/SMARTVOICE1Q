@@ -1,0 +1,417 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #fff;
+    }
+    /* Everything sits inside the iris, which opens from track's Overdue chip. */
+    #r-iris {
+      position: absolute;
+      inset: 0;
+    }
+    #r-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(820px 680px at 74% 42%, rgba(124, 58, 237, 0.45), transparent 70%),
+        radial-gradient(520px 420px at 6% 96%, rgba(99, 102, 241, 0.25), transparent 70%),
+        linear-gradient(160deg, #1e1a6e 0%, #141056 45%, #0c0a33 100%);
+    }
+    .tile {
+      position: absolute;
+      left: 110px;
+      top: 104px;
+      width: 140px;
+      height: 140px;
+      border-radius: 38px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      box-shadow: 0 22px 46px -16px rgba(139, 92, 246, 0.9), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tile svg {
+      width: 76px;
+      height: 76px;
+    }
+    .title {
+      position: absolute;
+      left: 286px;
+      top: 92px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      font-size: 90px;
+      line-height: 1.03;
+      letter-spacing: -0.02em;
+    }
+    .w {
+      display: inline-block;
+    }
+    .accent {
+      background: linear-gradient(90deg, #a78bfa, #c4b5fd);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .sub {
+      position: absolute;
+      left: 110px;
+      top: 330px;
+      font-size: 44px;
+      color: rgba(232, 230, 255, 0.92);
+    }
+    .list {
+      position: absolute;
+      left: 110px;
+      top: 462px;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 37px;
+      font-weight: 500;
+    }
+    .tick {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #6366f1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+    }
+    .tick svg {
+      width: 30px;
+      height: 30px;
+    }
+    #r-pill {
+      position: absolute;
+      left: 110px;
+      top: 846px;
+      height: 92px;
+      padding: 0 40px 0 24px;
+      border-radius: 46px;
+      background: #4f46e5;
+      box-shadow: 0 18px 40px -16px rgba(79, 70, 229, 0.9);
+      display: flex;
+      align-items: center;
+      font-size: 34px;
+      font-weight: 600;
+    }
+    #r-pill-text {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .clock {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      flex: none;
+    }
+    .hand {
+      position: absolute;
+      left: 50%;
+      bottom: 50%;
+      width: 4px;
+      margin-left: -2px;
+      border-radius: 2px;
+      background: #fff;
+      transform-origin: 50% 100%;
+    }
+    #r-hand-m {
+      height: 18px;
+    }
+    #r-hand-h {
+      height: 12px;
+    }
+
+    /* Phone with the reminder */
+    #r-phone {
+      position: absolute;
+      left: 1250px;
+      top: 150px;
+      width: 400px;
+      height: 820px;
+      background: #0b1020;
+      border-radius: 62px;
+      padding: 14px;
+      box-shadow: 0 60px 100px -24px rgba(0, 0, 0, 0.85), 0 0 0 2px rgba(255, 255, 255, 0.14);
+    }
+    .ph-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #eef2ff, #e0e7ff);
+      color: #0f172a;
+    }
+    .ph-notch {
+      position: absolute;
+      left: 50%;
+      top: 12px;
+      width: 120px;
+      height: 32px;
+      margin-left: -60px;
+      background: #0b1020;
+      border-radius: 18px;
+    }
+    .ph-status {
+      position: absolute;
+      left: 34px;
+      right: 34px;
+      top: 20px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    #r-note {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 82px;
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 22px 22px 24px;
+      box-shadow: 0 20px 40px -20px rgba(30, 27, 75, 0.45);
+    }
+    .note-h {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .note-ic {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #2f6bff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .note-ic svg {
+      width: 26px;
+      height: 26px;
+    }
+    .note-h b {
+      display: block;
+      font-size: 28px;
+    }
+    .note-h span {
+      font-size: 18px;
+      color: #64748b;
+    }
+    .note-msg {
+      margin-top: 18px;
+      background: #f1f5f9;
+      border-radius: 18px;
+      padding: 18px 20px;
+      font-size: 26px;
+      line-height: 1.38;
+      color: #1e293b;
+    }
+    .note-msg p + p {
+      margin-top: 10px;
+    }
+    #r-send {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 640px;
+      height: 70px;
+      border-radius: 18px;
+      background: #2f6bff;
+      color: #fff;
+      font-size: 27px;
+      font-weight: 700;
+      box-shadow: 0 14px 28px -12px rgba(47, 107, 255, 0.9);
+    }
+    .send-l {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    #r-send-b {
+      opacity: 0;
+    }
+    #r-badge {
+      position: absolute;
+      left: 1560px;
+      top: 92px;
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      box-shadow: 0 20px 44px -14px rgba(37, 99, 235, 0.95), 0 0 0 8px rgba(59, 130, 246, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #r-badge-plane {
+      width: 64px;
+      height: 64px;
+    }
+    #r-cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 62px;
+      height: 62px;
+      z-index: 20;
+    }
+    #r-flood {
+      position: absolute;
+      inset: 0;
+      background: #064e43;
+      opacity: 0;
+    }
+  </style>
+
+  <div data-hf-id="hf-275e" id="root" data-composition-id="remind" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-65rb" id="r-iris">
+      <div data-hf-id="hf-g7c3" id="r-bg"></div>
+
+      <div data-hf-id="hf-nspp" id="r-tile" class="tile">
+        <svg data-hf-id="hf-3jqd" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path data-hf-id="hf-kh1t" d="M6 9a6 6 0 0 1 12 0c0 6.5 3 8.5 3 8.5H3S6 15.5 6 9" />
+          <path data-hf-id="hf-k99i" d="M10.3 21a1.9 1.9 0 0 0 3.4 0" />
+        </svg>
+      </div>
+      <h2 data-hf-id="hf-3pz4" id="r-title" class="title">
+        <span data-hf-id="hf-kawi" class="w">Automate</span> <span data-hf-id="hf-xb21" class="w">Polite</span><br data-hf-id="hf-x5px" />
+        <span data-hf-id="hf-9f79" class="w accent">Reminders</span>
+      </h2>
+      <p data-hf-id="hf-sm7g" id="r-sub" class="sub">Let your app do the follow-up.</p>
+
+      <div data-hf-id="hf-33o8" class="list">
+        <div data-hf-id="hf-ox3f" class="item r-item">
+          <span data-hf-id="hf-coyi" class="tick"><svg data-hf-id="hf-dy64" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-m1lx" class="r-check" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1" /></svg></span>
+          Gentle &amp; professional messages
+        </div>
+        <div data-hf-id="hf-rls3" class="item r-item">
+          <span data-hf-id="hf-ptha" class="tick"><svg data-hf-id="hf-rv78" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-qc55" class="r-check" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1" /></svg></span>
+          Auto-scheduled reminders
+        </div>
+        <div data-hf-id="hf-n3bg" class="item r-item">
+          <span data-hf-id="hf-q7sb" class="tick"><svg data-hf-id="hf-qoa5" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-rj28" class="r-check" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1" /></svg></span>
+          Reduce late payments
+        </div>
+        <div data-hf-id="hf-e8s7" class="item r-item">
+          <span data-hf-id="hf-qm3c" class="tick"><svg data-hf-id="hf-r2l6" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-r4r7" class="r-check" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1" /></svg></span>
+          Save time &amp; effort
+        </div>
+      </div>
+
+      <div data-hf-id="hf-7ku3" id="r-pill">
+        <div data-hf-id="hf-pge3" id="r-pill-text">
+          <span data-hf-id="hf-xh0p" class="clock"><span data-hf-id="hf-g8iz" id="r-hand-h" class="hand"></span><span data-hf-id="hf-zof2" id="r-hand-m" class="hand"></span></span>
+          Polite. Automated. Effective.
+        </div>
+      </div>
+
+      <div data-hf-id="hf-mwbm" id="r-phone">
+        <div data-hf-id="hf-66w1" class="ph-screen">
+          <div data-hf-id="hf-eni1" class="ph-notch"></div>
+          <div data-hf-id="hf-3hcz" class="ph-status"><span data-hf-id="hf-zwmt">9:41</span><span data-hf-id="hf-daxc">●●●</span></div>
+          <div data-hf-id="hf-jela" id="r-note">
+            <div data-hf-id="hf-tjcr" class="note-h">
+              <div data-hf-id="hf-gj1p" class="note-ic">
+                <svg data-hf-id="hf-gmtl" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-d2o5" d="M6 9a6 6 0 0 1 12 0c0 6.5 3 8.5 3 8.5H3S6 15.5 6 9" /><path data-hf-id="hf-d08a" d="M10.3 21a1.9 1.9 0 0 0 3.4 0" /></svg>
+              </div>
+              <div data-hf-id="hf-yeow"><b data-hf-id="hf-x1n3">Reminder</b><span data-hf-id="hf-lx9g">10:00 AM</span></div>
+            </div>
+            <div data-hf-id="hf-6az0" class="note-msg">
+              <p data-hf-id="hf-ghtz" class="r-line">Hi,</p>
+              <p data-hf-id="hf-hchn" class="r-line">Just a friendly reminder that invoice #INV-004 is overdue. Please let us know if you need any assistance.</p>
+              <p data-hf-id="hf-u600" class="r-line">Thank you!</p>
+            </div>
+          </div>
+          <div data-hf-id="hf-s4m4" id="r-send">
+            <div data-hf-id="hf-zox8" id="r-send-a" class="send-l">Send Reminder</div>
+            <div data-hf-id="hf-w885" id="r-send-b" class="send-l">
+              <svg data-hf-id="hf-vwr7" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-lvfk" d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+              Reminder sent
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-hf-id="hf-caxg" id="r-badge" data-layout-ignore>
+        <svg data-hf-id="hf-9h41" id="r-badge-plane" viewBox="0 0 24 24" fill="#fff"><path data-hf-id="hf-8tt4" d="M22 2 2 10.5l7.5 3L18 6l-6.5 9.5 0 6.5 3.5-4.5 4 2z" /></svg>
+      </div>
+
+      <svg data-hf-id="hf-q2y3" id="r-cursor" viewBox="0 0 24 24" data-layout-ignore>
+        <path data-hf-id="hf-uhet" d="M3 2l16 9.5-7 1.6-3.6 6.6z" fill="#fff" stroke="#0b1020" stroke-width="1.4" stroke-linejoin="round" />
+      </svg>
+
+      <div data-hf-id="hf-dv6u" id="r-flood"></div>
+    </div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // Iris opens from the Overdue chip in the previous scene.
+    tl.fromTo(
+      "#r-iris",
+      { clipPath: "circle(0px at 1374px 771px)" },
+      { clipPath: "circle(2300px at 1374px 771px)", duration: 0.38, ease: "power2.in" },
+      0,
+    );
+
+    tl.fromTo("#r-tile", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.6)" }, 0.3);
+    tl.fromTo(
+      "#r-title .w",
+      { opacity: 0, filter: "blur(6px)" },
+      { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067, ease: "power2.out" },
+      0.42,
+    );
+    tl.fromTo("#r-sub", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 0.78);
+    tl.fromTo(".r-item", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, stagger: 0.12, ease: "power2.out" }, 1.0);
+    tl.fromTo(".r-check", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.25, stagger: 0.12, ease: "power2.out" }, 1.12);
+
+    // Phone rises; the reminder arrives and its lines fill in.
+    tl.fromTo("#r-phone", { opacity: 0, y: 320 }, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out" }, 0.55);
+    tl.fromTo("#r-note", { opacity: 0, y: -50, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "expo.out" }, 1.25);
+    tl.fromTo(".r-line", { opacity: 0, filter: "blur(5px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.22, stagger: 0.22, ease: "power2.out" }, 1.55);
+    tl.fromTo("#r-send", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 2.2);
+    tl.fromTo("#r-badge", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, 2.3);
+
+    // Pill opens; its clock ticks at a constant rate.
+    tl.fromTo("#r-pill", { opacity: 0, scaleX: 0.25, transformOrigin: "0% 50%" }, { opacity: 1, scaleX: 1, duration: 0.5, ease: "power3.out" }, 1.9);
+    tl.fromTo("#r-pill-text", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 2.2);
+    tl.fromTo("#r-hand-m", { rotation: 0 }, { rotation: 720, duration: 2.9, ease: "none" }, 2.0);
+    tl.fromTo("#r-hand-h", { rotation: 60 }, { rotation: 120, duration: 2.9, ease: "none" }, 2.0);
+
+    // Cursor presses Send Reminder; the button confirms; the plane launches.
+    tl.fromTo("#r-cursor", { x: 1990, y: 1140 }, { x: 1462, y: 800, duration: 0.75, ease: "power3.out" }, 2.6);
+    tl.to("#r-cursor", { scale: 0.86, duration: 0.08, ease: "power2.in", transformOrigin: "0% 0%" }, 3.35);
+    tl.to("#r-cursor", { scale: 1, duration: 0.14, ease: "power2.out" }, 3.43);
+    tl.to("#r-send", { scale: 0.95, duration: 0.08, ease: "power2.in" }, 3.36);
+    tl.to("#r-send", { scale: 1, backgroundColor: "#16a34a", duration: 0.22, ease: "back.out(2)" }, 3.44);
+    tl.to("#r-send-a", { opacity: 0, duration: 0.12 }, 3.44);
+    tl.to("#r-send-b", { opacity: 1, duration: 0.18 }, 3.5);
+    tl.to("#r-cursor", { x: 1700, y: 1180, duration: 0.5, ease: "power3.in" }, 3.7);
+    tl.to("#r-badge-plane", { x: 420, y: -320, rotation: 12, opacity: 0, duration: 0.6, ease: "power3.in" }, 3.5);
+
+    // Colour flood into the next world.
+    tl.fromTo("#r-flood", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.inOut" }, 4.55);
+
+    window.__timelines["remind"] = tl;
+  </script>
+</template>

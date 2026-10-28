@@ -21,7 +21,7 @@ export function AuthShell({ title, subtitle, children, footer }: { title: string
         <div className="rounded-3xl border bg-card px-7 py-9 shadow-lifted sm:px-11 sm:py-12">
           <h1 className="font-display text-4xl leading-tight tracking-tight text-foreground">{title}</h1>
           <p className="mt-2 text-[0.95rem] text-muted-foreground">{subtitle}</p>
-          <div className="mt-9 [&_button]:h-11 [&_button]:rounded-xl [&_input]:h-11 [&_input]:rounded-xl [&_input]:px-4">{children}</div>
+          <div className="mt-9 [&_button]:h-11 [&_button]:rounded-full [&_input]:h-11 [&_input]:rounded-xl [&_input]:px-4">{children}</div>
         </div>
         {footer ? <div className="mt-8 text-center text-sm text-muted-foreground">{footer}</div> : null}
       </div>

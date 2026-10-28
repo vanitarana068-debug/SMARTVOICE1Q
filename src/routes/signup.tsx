@@ -8,7 +8,12 @@ import { AuthShell, SocialButtons } from "@/components/auth-shell";
 import { toast } from "sonner";
 import { Link } from "@tanstack/react-router";
 
+const PLAN_NAMES = { free: "Free", starter: "Starter", growth: "Growth" } as const;
+type PlanSlug = keyof typeof PLAN_NAMES;
+
 export const Route = createFileRoute("/signup")({
+  validateSearch: (search: Record<string, unknown>): { plan?: PlanSlug } =>
+    typeof search["plan"] === "string" && search["plan"] in PLAN_NAMES ? { plan: search["plan"] as PlanSlug } : {},
   head: () => ({
     meta: [
       { title: "Create your account — SmartInvoice" },
@@ -24,6 +29,7 @@ export const Route = createFileRoute("/signup")({
 
 function SignupPage() {
   const navigate = useNavigate();
+  const plan = Route.useSearch().plan;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -78,6 +84,14 @@ function SignupPage() {
         </div>
       ) : (
         <>
+          {plan && plan !== "free" ? (
+            <div role="note" className="mb-6 rounded-xl border border-primary/40 bg-primary/10 p-4 text-sm text-foreground">
+              <p className="font-medium">You picked the {PLAN_NAMES[plan]} plan</p>
+              <p className="mt-1 text-muted-foreground">
+                Paid plans aren&apos;t available to buy yet, so your account starts on Free at ₹0. Nothing will be charged.
+              </p>
+            </div>
+          ) : null}
           <SocialButtons />
           <form onSubmit={signUp} className="grid gap-6">
             <div className="grid gap-2">

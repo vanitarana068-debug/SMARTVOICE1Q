@@ -1,0 +1,155 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #fff;
+    }
+    #e-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(900px 620px at 50% 46%, rgba(29, 63, 214, 0.55), transparent 70%),
+        linear-gradient(160deg, #0b1650 0%, #050a24 60%, #040820 100%);
+    }
+    #e-tile {
+      position: absolute;
+      left: 860px;
+      top: 168px;
+      width: 200px;
+      height: 200px;
+      border-radius: 54px;
+      overflow: hidden;
+      background: #1b2350;
+      box-shadow: 0 30px 70px -20px rgba(99, 102, 241, 0.85), inset 0 2px 0 rgba(255, 255, 255, 0.35);
+    }
+    #e-fill {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #38bdf8 0%, #6366f1 55%, #8b5cf6 100%);
+    }
+    #e-glyph {
+      position: absolute;
+      left: 50px;
+      top: 50px;
+      width: 100px;
+      height: 100px;
+    }
+    #e-title {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 412px;
+      text-align: center;
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      font-size: 100px;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+    }
+    .line {
+      display: block;
+    }
+    .grad {
+      background: linear-gradient(90deg, #38bdf8, #6d8bff 50%, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    #e-cta {
+      position: absolute;
+      left: 670px;
+      top: 716px;
+      width: 580px;
+      height: 120px;
+      border-radius: 60px;
+      background: linear-gradient(90deg, #3b82f6, #6366f1);
+      box-shadow: 0 24px 54px -18px rgba(79, 70, 229, 0.95);
+      overflow: hidden;
+    }
+    #e-cta-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      font-size: 44px;
+      font-weight: 600;
+    }
+    #e-sheen {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 160px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+      opacity: 0;
+    }
+    #e-cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 64px;
+      height: 64px;
+    }
+  </style>
+
+  <div data-hf-id="hf-32ii" id="root" data-composition-id="endcard" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-mqt2" id="e-bg"></div>
+
+    <div data-hf-id="hf-2cwn" id="e-tile">
+      <div data-hf-id="hf-tgr8" id="e-fill"></div>
+      <svg data-hf-id="hf-pnnm" id="e-glyph" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path data-hf-id="hf-18du" d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4" />
+        <path data-hf-id="hf-uhau" d="M14 3l5 5v3" />
+        <path data-hf-id="hf-ajck" d="M8.5 9h4M8.5 13h6M8.5 17h2.5" />
+        <path data-hf-id="hf-nox4" d="M19.2 13.3a1.8 1.8 0 0 1 2.5 2.5L16.4 21l-3.2.8.8-3.2z" />
+      </svg>
+    </div>
+
+    <h2 data-hf-id="hf-j23k" id="e-title">
+      <span data-hf-id="hf-ufyi" id="e-l1" class="line">Smart Invoice &amp;</span>
+      <span data-hf-id="hf-a0x5" id="e-l2" class="line"><span data-hf-id="hf-ml75" class="grad">Follow-Up App</span></span>
+    </h2>
+
+    <div data-hf-id="hf-pisn" id="e-cta">
+      <div data-hf-id="hf-cq6q" id="e-cta-text">
+        Simplify Your Billing
+        <svg data-hf-id="hf-o0mu" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-m7n8" d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </div>
+      <div data-hf-id="hf-46z5" id="e-sheen" data-layout-ignore></div>
+    </div>
+
+    <svg data-hf-id="hf-6g1q" id="e-cursor" viewBox="0 0 24 24" data-layout-ignore>
+      <path data-hf-id="hf-uhet" d="M3 2l16 9.5-7 1.6-3.6 6.6z" fill="#fff" stroke="#0b1020" stroke-width="1.4" stroke-linejoin="round" />
+    </svg>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // The mark is performed: the tile lands, its colour fill rises through it, the glyph draws on.
+    tl.fromTo("#e-tile", { scale: 0.55, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }, 0.05);
+    tl.fromTo("#e-fill", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", duration: 0.45, ease: "power2.inOut" }, 0.2);
+    tl.fromTo("#e-glyph", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 0.5);
+
+    // Wordmark wipes in, line by line.
+    tl.fromTo("#e-l1", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: "power3.out" }, 0.45);
+    tl.fromTo("#e-l2", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: "power3.out" }, 0.6);
+
+    // The call to action opens, then the cursor clicks it.
+    tl.fromTo("#e-cta", { opacity: 0, scaleX: 0.2 }, { opacity: 1, scaleX: 1, duration: 0.45, ease: "power3.out", transformOrigin: "50% 50%" }, 0.85);
+    tl.fromTo("#e-cta-text", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 1.1);
+    tl.fromTo("#e-cursor", { x: 1500, y: 1140 }, { x: 1196, y: 800, duration: 0.6, ease: "power3.out" }, 1.15);
+    tl.to("#e-cursor", { scale: 0.86, duration: 0.08, ease: "power2.in", transformOrigin: "0% 0%" }, 1.8);
+    tl.to("#e-cursor", { scale: 1, duration: 0.14, ease: "power2.out" }, 1.88);
+    tl.to("#e-cta", { scale: 0.96, duration: 0.08, ease: "power2.in" }, 1.81);
+    tl.to("#e-cta", { scale: 1, duration: 0.2, ease: "back.out(2)" }, 1.89);
+    tl.fromTo("#e-sheen", { x: -180, opacity: 1 }, { x: 640, opacity: 1, duration: 0.45, ease: "power2.inOut" }, 1.9);
+
+    window.__timelines["endcard"] = tl;
+  </script>
+</template>

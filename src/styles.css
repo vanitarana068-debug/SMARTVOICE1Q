@@ -6,7 +6,7 @@
 
 /*
  * Design system — "Ledger" premium SaaS look.
- * "Sky Serenity": cloud canvas, white surfaces, ice-blue tints, sky accents, deep-blue text.
+ * "Fintech Night": cinematic navy (#070B16), glass cards (#101A2C), electric blue #3B82F6 with cyan #22D3EE.
  */
 
 @theme inline {
@@ -59,66 +59,68 @@
   --color-paper-muted: var(--paper-muted);
   --color-paper-line: var(--paper-line);
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-label: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --shadow-card: 0 1px 2px rgb(35 71 106 / 0.06), 0 6px 20px -10px rgb(35 71 106 / 0.18);
-  --shadow-lifted: 0 2px 6px rgb(35 71 106 / 0.06), 0 22px 48px -20px rgb(35 71 106 / 0.28);
+  --shadow-card: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 10px 30px -14px rgb(0 0 0 / 0.7);
+  --shadow-lifted: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 30px 70px -28px rgb(0 0 0 / 0.85), 0 0 0 1px rgb(255 255 255 / 0.04);
 }
 
 :root {
-  --radius: 0.625rem;
-  color-scheme: light;
-  /* Sky Serenity: cloud canvas, white surfaces, ice-blue tints, sky accents, deep-blue text. */
-  --background: #f7fbff;
-  --foreground: #23476a;
-  --card: #ffffff;
-  --card-foreground: #23476a;
-  --popover: #ffffff;
-  --popover-foreground: #23476a;
-  --primary: #23476a;
-  --primary-foreground: #f7fbff;
-  /* Mid blue for accent text: sky itself is too pale to read on cloud. */
-  --primary-text: #2a68a8;
-  --secondary: #ddeeff;
-  --secondary-foreground: #23476a;
-  --muted: #eaf3fd;
-  --muted-foreground: #587390;
-  --accent: #ddeeff;
-  --accent-foreground: #23476a;
-  --destructive: #cf3f3f;
-  --destructive-foreground: #ffffff;
-  --success: #1e8457;
-  --success-foreground: #ffffff;
-  --warning: #b86e0e;
-  --warning-foreground: #ffffff;
-  --border: #d5e5f5;
-  --input: #c6daee;
-  --ring: #77b9f2;
-  --chart-1: #23476a;
-  --chart-2: #77b9f2;
-  --chart-3: #1e8457;
-  --chart-4: #b86e0e;
-  --chart-5: #cf3f3f;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #23476a;
-  --sidebar-primary: #23476a;
-  --sidebar-primary-foreground: #f7fbff;
-  --sidebar-accent: #ddeeff;
-  --sidebar-accent-foreground: #23476a;
-  --sidebar-border: #d5e5f5;
-  --sidebar-ring: #77b9f2;
-  /* Soft sky light washing across every page. */
-  --glow-1: rgb(119 185 242 / 0.38);
-  --glow-2: rgb(221 238 255 / 0.95);
-  --glow-3: rgb(119 185 242 / 0.18);
-  --sparkle: rgb(119 185 242 / 0.55);
-  --sparkle-tint: rgb(35 71 106 / 0.25);
-  /* White "paper" surface used for invoice and email previews. */
+  --radius: 0.875rem;
+  color-scheme: dark;
+  /* Fintech Night: cinematic navy, glass cards, electric blue with cyan highlights. */
+  --background: #070b16;
+  --background-2: #0b1220;
+  --foreground: #f8fafc;
+  --card: #101a2c;
+  --card-foreground: #f8fafc;
+  --popover: #101a2c;
+  --popover-foreground: #f8fafc;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  /* Lighter blue for small accent text so it stays readable on navy. */
+  --primary-text: #60a5fa;
+  --cyan: #22d3ee;
+  --secondary: #16223a;
+  --secondary-foreground: #f8fafc;
+  --muted: #0f1829;
+  --muted-foreground: #94a3b8;
+  --accent: #172440;
+  --accent-foreground: #dbeafe;
+  --destructive: #f87171;
+  --destructive-foreground: #0b1220;
+  --success: #34d399;
+  --success-foreground: #04130d;
+  --warning: #fbbf24;
+  --warning-foreground: #1a1203;
+  --border: rgb(148 163 184 / 0.18);
+  --input: rgb(148 163 184 / 0.24);
+  --ring: #60a5fa;
+  --chart-1: #3b82f6;
+  --chart-2: #22d3ee;
+  --chart-3: #34d399;
+  --chart-4: #fbbf24;
+  --chart-5: #94a3b8;
+  --sidebar: #0b1220;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #3b82f6;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #101a2c;
+  --sidebar-accent-foreground: #f8fafc;
+  --sidebar-border: rgb(148 163 184 / 0.12);
+  --sidebar-ring: #60a5fa;
+  /* Soft blue/cyan lighting, used sparingly. */
+  --glow-1: rgb(59 130 246 / 0.2);
+  --glow-2: rgb(34 211 238 / 0.1);
+  --glow-3: rgb(59 130 246 / 0.12);
+  --sparkle: transparent;
+  --sparkle-tint: transparent;
+  /* Crisp white "paper" for invoice previews. */
   --paper: #ffffff;
-  --paper-foreground: #23476a;
-  --paper-muted: #587390;
-  --paper-line: #dde9f5;
+  --paper-foreground: #0f172a;
+  --paper-muted: #475569;
+  --paper-line: #e2e8f0;
 }
 
 .dark {
@@ -177,14 +179,15 @@
     line-height: 1.6;
   }
 
-  /* Full-page wrappers: navy night sky with soft glows and twinkling sparkles. */
+  /* Full-page wrappers: aurora glows over a near-black-to-indigo canvas. */
   .min-h-screen.bg-background {
     position: relative;
     isolation: isolate;
     background-image:
-      radial-gradient(60rem 40rem at 0% 0%, var(--glow-1), transparent 60%),
-      radial-gradient(50rem 36rem at 100% 10%, var(--glow-2), transparent 60%),
-      radial-gradient(56rem 40rem at 50% 100%, var(--glow-3), transparent 65%);
+      radial-gradient(56rem 34rem at 78% -8%, var(--glow-1), transparent 65%),
+      radial-gradient(40rem 28rem at 8% 2%, var(--glow-2), transparent 62%),
+      radial-gradient(60rem 36rem at 50% 115%, var(--glow-3), transparent 66%),
+      linear-gradient(180deg, #070b16 0%, #0b1220 60%, #070b16 100%);
     background-attachment: fixed;
   }
 
@@ -229,12 +232,19 @@
     }
   }
 
-  /* Display serif: Fraunces with its softened, optically sized cut. */
+  /* Display headings: bold, tightly tracked sans. */
   .font-display {
-    font-weight: 380;
-    font-optical-sizing: auto;
-    font-variation-settings: "SOFT" 100, "WONK" 0;
-    letter-spacing: -0.02em;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+
+  /* Emphasis inside headings: upright, with a blue-to-teal gradient. */
+  .font-display em {
+    font-style: normal;
+    background-image: linear-gradient(90deg, #60a5fa 0%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   /* Small all-caps labels (eyebrows, field captions) get their own monospace voice. */
@@ -259,6 +269,27 @@
   100% { opacity: 1; transform: rotate(-14deg) scale(1); }
 }
 
+@keyframes float-up-14 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -14px, 0); }
+}
+@keyframes float-up-18 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -18px, 0); }
+}
+@keyframes float-down-12 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, 12px, 0); }
+}
+@keyframes float-up-10 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -10px, 0); }
+}
+@keyframes bar-grow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
 @keyframes sparkle-twinkle {
   0%, 100% { opacity: 0.35; }
   50% { opacity: 0.9; }
@@ -274,7 +305,7 @@
 }
 
 @utility shadow-paper {
-  box-shadow: 0 1px 0 rgb(255 255 255 / 0.8) inset, 0 30px 60px -24px rgb(35 71 106 / 0.35), 0 10px 24px -14px rgb(35 71 106 / 0.2);
+  box-shadow:  0 1px 0 rgb(255 255 255 / 0.9) inset, 0 40px 80px -30px rgb(0 0 0 / 0.8), 0 0 60px -20px rgb(47 107 255 / 0.35);
 }
 
 /* Scroll reveal: elements start slightly lowered and fade in once visible (see components/site/reveal.tsx). */
@@ -298,9 +329,45 @@
     transition: none;
   }
   .animate-rise,
-  .animate-stamp {
+  .animate-stamp,
+  .float-invoice,
+  .float-payment,
+  .float-reminder,
+  .float-stats,
+  .animate-bar {
     animation: none;
   }
+}
+
+/* Floating hero cards. Durations 4-7 s, staggered by --float-delay. */
+@utility float-invoice {
+  animation: float-up-14 6s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+@utility float-payment {
+  animation: float-up-18 5s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+@utility float-reminder {
+  animation: float-down-12 7s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+@utility float-stats {
+  animation: float-up-10 4.5s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+@utility animate-bar {
+  transform-origin: 50% 100%;
+  animation: bar-grow 0.9s var(--ease-out-expo) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* Glass surface: translucent card over the navy with a hairline border. */
+@utility glass {
+  background: linear-gradient(180deg, rgb(16 26 44 / 0.86), rgb(16 26 44 / 0.66));
+  border: 1px solid rgb(148 163 184 / 0.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 @utility shadow-card {

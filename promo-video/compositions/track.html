@@ -1,0 +1,305 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #fff;
+    }
+    #t-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(820px 640px at 76% 48%, rgba(16, 185, 129, 0.32), transparent 70%),
+        radial-gradient(600px 420px at 8% 92%, rgba(20, 184, 166, 0.18), transparent 70%),
+        linear-gradient(160deg, #073331 0%, #052221 45%, #031414 100%);
+    }
+    #t-stage {
+      position: absolute;
+      inset: 0;
+    }
+    .tile {
+      position: absolute;
+      left: 110px;
+      top: 104px;
+      width: 140px;
+      height: 140px;
+      border-radius: 38px;
+      background: linear-gradient(135deg, #22d3ee 0%, #14b8a6 100%);
+      box-shadow: 0 22px 46px -16px rgba(20, 184, 166, 0.9), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tile svg {
+      width: 78px;
+      height: 78px;
+    }
+    .title {
+      position: absolute;
+      left: 286px;
+      top: 92px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      font-size: 90px;
+      line-height: 1.03;
+      letter-spacing: -0.02em;
+    }
+    .w {
+      display: inline-block;
+    }
+    .accent {
+      background: linear-gradient(90deg, #5eead4, #38bdf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .sub {
+      position: absolute;
+      left: 110px;
+      top: 330px;
+      font-size: 44px;
+      color: rgba(226, 250, 245, 0.92);
+    }
+    .list {
+      position: absolute;
+      left: 110px;
+      top: 452px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 38px;
+      font-weight: 500;
+    }
+    .dot {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+      color: #fff;
+    }
+    .dot svg {
+      width: 30px;
+      height: 30px;
+    }
+    #t-pill {
+      position: absolute;
+      left: 110px;
+      top: 846px;
+      height: 92px;
+      padding: 0 40px 0 30px;
+      border-radius: 46px;
+      background: rgba(16, 185, 129, 0.16);
+      border: 2px solid rgba(52, 211, 153, 0.45);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 34px;
+      font-weight: 600;
+    }
+    #t-pill-text {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Payment Status card */
+    #t-card {
+      position: absolute;
+      left: 1060px;
+      top: 262px;
+      width: 720px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 2px solid rgba(94, 234, 212, 0.55);
+      box-shadow: 0 0 0 6px rgba(45, 212, 191, 0.08), 0 50px 90px -24px rgba(0, 0, 0, 0.8);
+      background: #ffffff;
+    }
+    .t-head {
+      height: 96px;
+      padding: 0 34px;
+      background: #0d3b38;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: "Poppins", sans-serif;
+      font-size: 34px;
+      font-weight: 600;
+    }
+    #t-refresh {
+      width: 40px;
+      height: 40px;
+    }
+    .t-rows {
+      position: relative;
+    }
+    .t-row {
+      height: 118px;
+      padding: 0 34px;
+      display: grid;
+      grid-template-columns: 210px 1fr auto;
+      align-items: center;
+      border-top: 1px solid #edf2f7;
+      color: #0f172a;
+      font-size: 30px;
+      font-weight: 600;
+    }
+    .t-row:first-child {
+      border-top: none;
+    }
+    .chip {
+      justify-self: start;
+      font-size: 24px;
+      font-weight: 700;
+      padding: 6px 18px;
+      border-radius: 999px;
+    }
+    .paid {
+      color: #15803d;
+      background: #dcfce7;
+    }
+    .pending {
+      color: #c2410c;
+      background: #ffedd5;
+    }
+    .overdue {
+      color: #dc2626;
+      background: #fee2e2;
+    }
+    .amt {
+      font-variant-numeric: tabular-nums;
+    }
+    #t-sheen {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 118px;
+      background: linear-gradient(180deg, rgba(45, 212, 191, 0), rgba(45, 212, 191, 0.16), rgba(45, 212, 191, 0));
+      pointer-events: none;
+      opacity: 0;
+    }
+    #t-ring {
+      position: absolute;
+      left: 1300px;
+      top: 743px;
+      width: 150px;
+      height: 56px;
+      border-radius: 999px;
+      border: 3px solid #ef4444;
+      opacity: 0;
+    }
+  </style>
+
+  <div data-hf-id="hf-l066" id="root" data-composition-id="track" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-rg9x" id="t-bg"></div>
+
+    <div data-hf-id="hf-qlmm" id="t-stage">
+      <div data-hf-id="hf-rhrb" id="t-tile" class="tile">
+        <svg data-hf-id="hf-mih4" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path data-hf-id="hf-18du" d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4" />
+          <path data-hf-id="hf-uhau" d="M14 3l5 5v3" />
+          <path data-hf-id="hf-ajck" d="M8.5 9h4M8.5 13h6M8.5 17h2.5" />
+          <path data-hf-id="hf-nox4" d="M19.2 13.3a1.8 1.8 0 0 1 2.5 2.5L16.4 21l-3.2.8.8-3.2z" />
+        </svg>
+      </div>
+      <h2 data-hf-id="hf-czo6" id="t-title" class="title">
+        <span data-hf-id="hf-b3zz" class="w">Track</span> <span data-hf-id="hf-7veu" class="w">Payment</span><br data-hf-id="hf-x5px" />
+        <span data-hf-id="hf-fgz8" class="w accent">Status</span>
+      </h2>
+      <p data-hf-id="hf-59cs" id="t-sub" class="sub">Stay informed. Always.</p>
+
+      <div data-hf-id="hf-33o8" class="list">
+        <div data-hf-id="hf-j1av" class="item t-item">
+          <span data-hf-id="hf-58hp" class="dot" style="background: #22c55e"><svg data-hf-id="hf-dy64" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path data-hf-id="hf-lvfk" d="m5 12.5 4.5 4.5L19 7.5" /></svg></span>
+          Paid invoices
+        </div>
+        <div data-hf-id="hf-k0h1" class="item t-item">
+          <span data-hf-id="hf-2tlz" class="dot" style="background: #f97316"><svg data-hf-id="hf-qfml" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle data-hf-id="hf-xksm" cx="12" cy="12" r="8" /><path data-hf-id="hf-0m9l" d="M12 8v4l3 2" /></svg></span>
+          Pending payments
+        </div>
+        <div data-hf-id="hf-ie67" class="item t-item">
+          <span data-hf-id="hf-c42e" class="dot" style="background: #ef4444"><svg data-hf-id="hf-5kws" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path data-hf-id="hf-i0iy" d="M12 6v8M12 18h.01" /></svg></span>
+          Overdue accounts
+        </div>
+        <div data-hf-id="hf-ersd" class="item t-item">
+          <span data-hf-id="hf-qiz1" class="dot" style="background: #8b5cf6"><svg data-hf-id="hf-9tz1" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path data-hf-id="hf-b98k" d="M6 18v-4M11 18v-8M16 18v-6M20 18V8" /></svg></span>
+          Real-time updates
+        </div>
+      </div>
+
+      <div data-hf-id="hf-27ml" id="t-pill">
+        <div data-hf-id="hf-u3x1" id="t-pill-text">
+          <svg data-hf-id="hf-ujqf" width="36" height="36" viewBox="0 0 24 24" fill="#34d399"><path data-hf-id="hf-gy5o" d="M13 2 4 14h7l-1 8 9-12h-7z" /></svg>
+          No more missed payments
+        </div>
+      </div>
+
+      <div data-hf-id="hf-xuoe" id="t-card">
+        <div data-hf-id="hf-jxaf" class="t-head">
+          Payment Status
+          <svg data-hf-id="hf-zkn1" id="t-refresh" viewBox="0 0 24 24" fill="none" stroke="#5eead4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path data-hf-id="hf-4qz8" d="M20 11a8 8 0 0 0-14.6-4.5L4 8" /><path data-hf-id="hf-9lx8" d="M4 3v5h5" /><path data-hf-id="hf-h83v" d="M4 13a8 8 0 0 0 14.6 4.5L20 16" /><path data-hf-id="hf-br0q" d="M20 21v-5h-5" />
+          </svg>
+        </div>
+        <div data-hf-id="hf-trki" class="t-rows">
+          <div data-hf-id="hf-rlia" class="t-row t-r"><span data-hf-id="hf-w4ce">INV-001</span><span data-hf-id="hf-zle4" class="chip paid t-chip">Paid</span><span data-hf-id="hf-ehe8" class="amt">₹12,500</span></div>
+          <div data-hf-id="hf-t952" class="t-row t-r"><span data-hf-id="hf-winf">INV-002</span><span data-hf-id="hf-uzl8" class="chip pending t-chip">Pending</span><span data-hf-id="hf-mbnz" class="amt">₹8,900</span></div>
+          <div data-hf-id="hf-tng3" class="t-row t-r"><span data-hf-id="hf-wwyg">INV-003</span><span data-hf-id="hf-yo84" class="chip paid t-chip">Paid</span><span data-hf-id="hf-35gt" class="amt">₹25,000</span></div>
+          <div data-hf-id="hf-u1r4" class="t-row t-r"><span data-hf-id="hf-u4t9">INV-004</span><span data-hf-id="hf-8529" id="t-overdue" class="chip overdue t-chip">Overdue</span><span data-hf-id="hf-nx7u" class="amt">₹15,750</span></div>
+          <div data-hf-id="hf-1m7j" id="t-sheen"></div>
+        </div>
+      </div>
+      <div data-hf-id="hf-lj0a" id="t-ring"></div>
+    </div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // Whip in from the right, landing sharp.
+    tl.fromTo("#t-stage", { x: 560, filter: "blur(16px)", opacity: 0 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.34, ease: "expo.out" }, 0);
+
+    tl.fromTo("#t-tile", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.6)" }, 0.15);
+    tl.fromTo(
+      "#t-title .w",
+      { opacity: 0, filter: "blur(6px)" },
+      { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067, ease: "power2.out" },
+      0.3,
+    );
+    tl.fromTo("#t-sub", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 0.62);
+
+    // Legend: each coloured dot pops, its label sharpens.
+    tl.fromTo(".t-item .dot", { scale: 0.4 }, { scale: 1, duration: 0.4, stagger: 0.12, ease: "back.out(2)" }, 0.9);
+    tl.fromTo(".t-item", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, stagger: 0.12, ease: "power2.out" }, 0.9);
+
+    // Status card: rows arrive, then chips land.
+    tl.fromTo(".t-r", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.32, stagger: 0.1, ease: "power3.out" }, 1.0);
+    tl.fromTo(".t-chip", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, stagger: 0.1, ease: "back.out(2.2)" }, 1.4);
+
+    // Real-time update: refresh turns once while a sheen sweeps the rows.
+    tl.fromTo("#t-refresh", { rotation: 0 }, { rotation: 360, duration: 0.7, ease: "power2.inOut", transformOrigin: "50% 50%" }, 2.1);
+    tl.fromTo("#t-sheen", { y: 0, opacity: 0 }, { y: 354, opacity: 1, duration: 0.7, ease: "power2.inOut" }, 2.1);
+    tl.to("#t-sheen", { opacity: 0, duration: 0.15 }, 2.8);
+
+    // Pill opens from its left edge.
+    tl.fromTo("#t-pill", { opacity: 0, scaleX: 0.25, transformOrigin: "0% 50%" }, { opacity: 1, scaleX: 1, duration: 0.5, ease: "power3.out" }, 2.4);
+    tl.fromTo("#t-pill-text", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 2.7);
+
+    // The overdue chip calls for attention once: the next scene opens from it.
+    tl.fromTo("#t-overdue", { scale: 1 }, { scale: 1.16, duration: 0.18, ease: "power2.out" }, 3.75);
+    tl.to("#t-overdue", { scale: 1, duration: 0.3, ease: "back.out(2.4)" }, 3.93);
+    tl.fromTo("#t-ring", { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.6, duration: 0.55, ease: "power2.out", transformOrigin: "50% 50%", immediateRender: false }, 3.8);
+
+    window.__timelines["track"] = tl;
+  </script>
+</template>

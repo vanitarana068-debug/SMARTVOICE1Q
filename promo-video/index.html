@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #050a24;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-1mhg" id="root" data-composition-id="main" data-start="0" data-duration="28.6" data-width="1920" data-height="1080">
+      <!-- One scene per panel of the reference image, in order. -->
+      <div data-hf-id="hf-m5g2"
+        id="hero"
+        data-composition-id="hero"
+        data-composition-src="compositions/hero.html"
+        data-start="0"
+        data-duration="7"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+        style="z-index: 1"
+      ></div>
+      <div data-hf-id="hf-2yrx"
+        id="create"
+        data-composition-id="create"
+        data-composition-src="compositions/create.html"
+        data-start="7"
+        data-duration="4.6"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+        style="z-index: 2"
+      ></div>
+      <div data-hf-id="hf-dq4w"
+        id="track"
+        data-composition-id="track"
+        data-composition-src="compositions/track.html"
+        data-start="11.6"
+        data-duration="4.8"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+        style="z-index: 3"
+      ></div>
+      <!-- Starts 0.35 s before track ends: it opens as an iris from track's Overdue chip. -->
+      <div data-hf-id="hf-5i3c"
+        id="remind"
+        data-composition-id="remind"
+        data-composition-src="compositions/remind.html"
+        data-start="16.05"
+        data-duration="4.95"
+        data-track-index="2"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+        style="z-index: 4"
+      ></div>
+      <div data-hf-id="hf-g4kw"
+        id="paid"
+        data-composition-id="paid"
+        data-composition-src="compositions/paid.html"
+        data-start="21"
+        data-duration="4.4"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+        style="z-index: 5"
+      ></div>
+      <div data-hf-id="hf-ese1"
+        id="endcard"
+        data-composition-id="endcard"
+        data-composition-src="compositions/endcard.html"
+        data-start="25.4"
+        data-duration="3.2"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+        style="z-index: 6"
+      ></div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>
